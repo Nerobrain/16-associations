@@ -1,4 +1,21 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from ru!"
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "app_title": "16 Ассоциаций",
+    "my_projects": "Мои проекты",
+    "about_me": "Обо мне",
+    "toggle_sidebar": "Открыть меню",
+    "nav_new_analysis": "Новый анализ",
+    "nav_instructions": "Инструкция",
+    "nav_history": "История",
+    "nav_settings": "Настройки",
+    "greeting": "Привет, мир!",
+    "welcome_message": "Добро пожаловать в SvelteKit",
+    "visit_prefix": "Посетите",
+    "visit_suffix": "чтобы прочитать документацию",
+    "paraglide_link": "paraglide",
+    "title_instructions": "Инструкция",
+    "title_history": "История",
+    "title_settings": "Настройки",
+    "page_under_development": "Страница в разработке",
+    "all_data_is_local": "Все данные храняться только на вашем устройстве"
 }

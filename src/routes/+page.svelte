@@ -1,13 +1,13 @@
 <script lang="ts">
     import { resolve } from "$app/paths";
+    import { m } from "$lib/paraglide/messages.js";
 </script>
 
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
+<h1 class="text-3xl font-bold underline">{m.greeting()}</h1>
 
-<h1>Welcome to SvelteKit</h1>
+<h1>{m.welcome_message()}</h1>
 <p>
-    Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the
-    documentation
+    {m.visit_prefix()} <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> {m.visit_suffix()}
 </p>
 
-<a href={resolve("/demo/paraglide")}>paraglide</a>
+<a href={resolve("/demo/paraglide")}>{m.paraglide_link()}</a>

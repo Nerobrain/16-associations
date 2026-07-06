@@ -1,21 +1,14 @@
 <script lang="ts">
+    import { m } from "$lib/paraglide/messages.js";
+
     type ExternalLink = {
         href: string;
-        label: string;
         icon: string;
     };
 
     const externalLinks: ExternalLink[] = [
-        {
-            icon: "🚀",
-            href: "https://github.com/yourprofile",
-            label: "Мои проекты",
-        },
-        {
-            icon: "👤",
-            href: "https://linkedin.com/in/yourprofile",
-            label: "Обо мне",
-        },
+        { icon: "🚀", href: "https://github.com/yourprofile" },
+        { icon: "👤", href: "https://linkedin.com/in/yourprofile" },
     ];
 
     let {
@@ -25,6 +18,11 @@
         ontogglesidebar: () => void;
         sidebaropen: boolean;
     } = $props();
+
+    function linkLabel(href: string): string {
+        if (href === "https://github.com/yourprofile") return m.my_projects();
+        return m.about_me();
+    }
 </script>
 
 <header
@@ -36,7 +34,7 @@
             onclick={ontogglesidebar}
             class="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-400
                    hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle sidebar"
+            aria-label={m.toggle_sidebar()}
         >
             {#if sidebaropen}
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -50,7 +48,7 @@
         </button>
 
         <h1 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
-            16 Ассоциаций
+            {m.app_title()}
         </h1>
     </div>
 
@@ -64,7 +62,7 @@
                        hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
             >
                 <span>{link.icon}</span>
-                <span class="hidden sm:inline">{link.label}</span>
+                <span class="hidden sm:inline">{linkLabel(link.href)}</span>
             </a>
         {/each}
     </div>

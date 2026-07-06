@@ -1,4 +1,21 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+    "$schema": "https://inlang.com/schema/inlang-message-format",
+    "app_title": "16 Associations",
+    "my_projects": "My Projects",
+    "about_me": "About Me",
+    "toggle_sidebar": "Toggle sidebar",
+    "nav_new_analysis": "New Analysis",
+    "nav_instructions": "Instructions",
+    "nav_history": "History",
+    "nav_settings": "Settings",
+    "greeting": "Hello world!",
+    "welcome_message": "Welcome to SvelteKit",
+    "visit_prefix": "Visit",
+    "visit_suffix": "to read the documentation",
+    "paraglide_link": "paraglide",
+    "title_instructions": "Instructions",
+    "title_history": "History",
+    "title_settings": "Settings",
+    "page_under_development": "Page under development",
+    "all_data_is_local": "All data is stored only on your device."
 }
