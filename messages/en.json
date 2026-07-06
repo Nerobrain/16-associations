@@ -17,5 +17,17 @@
     "title_history": "History",
     "title_settings": "Settings",
     "page_under_development": "Page under development",
-    "all_data_is_local": "All data is stored only on your device."
+    "all_data_is_local": "All data is stored only on your device.",
+    "info_description": "The 16 Associations test is a psychological self-analysis technique based on Carl Gustav Jung's free association method. It helps uncover unconscious beliefs, hidden fears, and internal conflicts that influence various areas of your life. By tracing your spontaneous word associations down to a single core concept, you gain access to insights that your conscious mind often keeps hidden.",
+    "info_goal": "To identify deep-seated unconscious attitudes and beliefs tied to a specific life issue, understand true motivations, discover internal conflicts and blocks, and gain a fresh perspective on the problem.",
+    "info_step1_title": "1. Choose your topic",
+    "info_step1": "Pick an area of life you want to explore (e.g. money, relationships, career, health) and write it down as a single word at the top of a page.",
+    "info_step2_title": "2. Write 16 associations",
+    "info_step2": "Without overthinking, write the first 16 words, phrases, or feelings that come to mind about your topic. Don't filter or judge — capture whatever arises.",
+    "info_step3_title": "3. Pair them down to 8",
+    "info_step3": "Group the words into pairs (1st with 2nd, 3rd with 4th, etc.). For each pair, find one word that captures their shared essence. Be honest — go with your gut feeling, not logic.",
+    "info_step4_title": "4. Keep narrowing: 4 → 2 → 1",
+    "info_step4": "Repeat the process: reduce 8 words to 4, then 4 to 2, then 2 to a single final word. This last word is your deep, unconscious association with the original topic.",
+    "info_step5_title": "5. Interpret the result",
+    "info_step5": "Reflect on the final word. How does it relate to your original topic? What feelings or memories does it bring up? This is the insight your subconscious is sending you. Consider each column as a layer of understanding — from surface-level beliefs (column 1) to core emotions (column 4)."
 }
