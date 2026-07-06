@@ -1,42 +1,53 @@
-# sv
+# 16 Associations Self-Analysis Test
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A serverless Single Page Application (SPA) for taking the 16 associations psychological self-analysis test. This application runs entirely in the browser with no server-side processing or data transmission.
 
-## Creating a project
+## Overview
 
-If you're seeing this, you've probably already done this step. Congrats!
+The 16 associations test is a psychological self-assessment tool designed to help users explore their unconscious associations and thought patterns by examining their immediate responses to 16 different words. This implementation allows users to complete the test offline, with all data remaining in their browser.
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Features
 
-To recreate this project with the same configuration:
+- ✅ **Serverless**: Runs entirely in the browser with no server-side components
+- ✅ **Privacy-focused**: No data is sent to any server
+- ✅ **Offline-capable**: Works without internet connection
+- ✅ **Responsive design**: Works on mobile, tablet, and desktop devices
+- ✅ **Self-analysis tool**: Helps users explore unconscious associations and insights
 
-```sh
-# recreate this project
-npx sv@0.16.1 create --template minimal --types ts --add eslint tailwindcss="plugins:none" paraglide="languageTags:ru, en+demo:yes" sveltekit-adapter="adapter:static" --install npm 16-words
-```
+## Technical Details
 
-## Developing
+This is a single-page application built with modern web technologies:
+- HTML5 for structure
+- CSS3 for styling
+- JavaScript for interactivity
+- No external dependencies or frameworks
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## How to Use
 
-```sh
-npm run dev
+1. Open the application in any modern web browser
+2. Review the instructions for the 16 associations test
+3. Enter your associations for each of the 16 words
+4. Review your results and insights
+5. All data remains in your browser - no information is transmitted
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Privacy Notice
 
-## Building
+This application is completely serverless. No data is sent to any server, stored, or processed outside your browser. The application is designed to respect your privacy completely.
 
-To create a production version of your app:
+## About the 16 Associations Test
 
-```sh
-npm run build
-```
+The 16 associations test is a psychological assessment method that uses word associations to gain insights into a person's unconscious thoughts and emotional patterns. Participants are asked to respond immediately to a list of 16 words with the first word that comes to mind, allowing for the exploration of associative thinking patterns.
 
-You can preview the production build with `npm run preview`.
+## Localization
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- [English](README.md) (this version)
+- [Русский](README.ru.md)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Based on psychological self-analysis techniques
+- Built with modern web standards for maximum compatibility
