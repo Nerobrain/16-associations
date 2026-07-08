@@ -2,7 +2,7 @@
     import { m } from "$lib/paraglide/messages.js";
 </script>
 
-<h1 class="text-2xl font-bold">{m.title_instructions()}</h1>
+<h1 class="text-2xl font-bold">{m.title_info()}</h1>
 
 <p class="mt-4 text-gray-700 leading-relaxed">
     {m.info_description()}

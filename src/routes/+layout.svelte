@@ -4,13 +4,14 @@
     import { page } from "$app/state";
     import { locales, localizeHref } from "$lib/paraglide/runtime";
     import "./layout.css";
-    import favicon from "$lib/assets/favicon.svg";
     import MainLayout from "$lib/components/layout/MainLayout.svelte";
 
     let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+    <!-- <link rel="icon" type="image/svg+xml" href={favicon} /> -->
+</svelte:head>
 
 <MainLayout>
     {@render children()}
@@ -18,10 +19,6 @@
 
 <div style="display:none">
     {#each locales as locale (locale)}
-        <a
-            href={resolve(
-                localizeHref(page.url.pathname, { locale }) as Pathname,
-            )}>{locale}</a
-        >
+        <a href={resolve(localizeHref(page.url.pathname, { locale }) as Pathname)}>{locale}</a>
     {/each}
 </div>

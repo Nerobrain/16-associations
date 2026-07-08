@@ -7,15 +7,16 @@
     type Locale = (typeof locales)[number];
 
     type NavItem = {
-        href: "/" | "/info" | "/history" | "/settings";
         icon: string;
+        route: "/" | "/session" | "/history" | "/settings";
+        label: string;
     };
 
     const navItems: NavItem[] = [
-        { icon: "📝", href: "/" },
-        { icon: "📖", href: "/info" },
-        { icon: "📊", href: "/history" },
-        { icon: "⚙️", href: "/settings" },
+        { icon: "📖", route: "/", label: m.nav_info() },
+        { icon: "📝", route: "/session", label: m.nav_session() },
+        { icon: "📊", route: "/history", label: m.nav_history() },
+        { icon: "⚙️", route: "/settings", label: m.nav_settings() },
     ];
 
     type LocaleBtn = {
@@ -27,27 +28,12 @@
         { icon: "🇺🇸", name: "en" },
     ];
 
-    function navLabel(href: string): string {
-        switch (href) {
-            case "/":
-                return m.nav_new_analysis();
-            case "/info":
-                return m.nav_instructions();
-            case "/history":
-                return m.nav_history();
-            case "/settings":
-                return m.nav_settings();
-            default:
-                return "";
-        }
-    }
-
-    function isActive(itemHref: string): boolean {
+    function isActive(itemRoute: string): boolean {
         const currentPath = page.url.pathname;
-        if (itemHref === "/") {
-            return currentPath === "/" || currentPath.startsWith("/step");
+        if (itemRoute === "/") {
+            return currentPath === resolve("/") || currentPath.startsWith(resolve("/session"));
         }
-        return currentPath === itemHref;
+        return currentPath === resolve(itemRoute as "/");
     }
 </script>
 
@@ -58,14 +44,14 @@
     <nav class="flex-1 space-y-1">
         {#each navItems as item (item)}
             <a
-                href={resolve(item.href)}
+                href={resolve(item.route)}
                 class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
-          {isActive(item.href)
+          {isActive(item.route)}
                     ? 'bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800'}"
             >
                 <span>{item.icon}</span>
-                {navLabel(item.href)}
+                {item.label}
             </a>
         {/each}
     </nav>
@@ -73,9 +59,7 @@
     <div class="text-xs text-gray-400 px-2 pt-4 pb-4">
         {m.all_data_is_local()}
     </div>
-    <div
-        class="text-xs text-gray-400 px-2 pt-4 border-t border-gray-200 dark:border-gray-700"
-    >
+    <div class="text-xs text-gray-400 px-2 pt-4 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
             <span>v1.0.0</span>
             <div class="flex items-center gap-1">

@@ -4,8 +4,8 @@
     "my_projects": "My Projects",
     "about_me": "About Me",
     "toggle_sidebar": "Toggle sidebar",
-    "nav_new_analysis": "New Analysis",
-    "nav_instructions": "Instructions",
+    "nav_session": "Session",
+    "nav_info": "About",
     "nav_history": "History",
     "nav_settings": "Settings",
     "greeting": "Hello world!",
@@ -13,7 +13,7 @@
     "visit_prefix": "Visit",
     "visit_suffix": "to read the documentation",
     "paraglide_link": "paraglide",
-    "title_instructions": "Instructions",
+    "title_info": "About",
     "title_history": "History",
     "title_settings": "Settings",
     "page_under_development": "Page under development",
@@ -29,5 +29,9 @@
     "info_step4_title": "4. Keep narrowing: 4 → 2 → 1",
     "info_step4": "Repeat the process: reduce 8 words to 4, then 4 to 2, then 2 to a single final word. This last word is your deep, unconscious association with the original topic.",
     "info_step5_title": "5. Interpret the result",
-    "info_step5": "Reflect on the final word. How does it relate to your original topic? What feelings or memories does it bring up? This is the insight your subconscious is sending you. Consider each column as a layer of understanding — from surface-level beliefs (column 1) to core emotions (column 4)."
+    "info_step5": "Reflect on the final word. How does it relate to your original topic? What feelings or memories does it bring up? This is the insight your subconscious is sending you. Consider each column as a layer of understanding — from surface-level beliefs (column 1) to core emotions (column 4).",
+    "intro_heading": "What would you like to explore?",
+    "intro_description": "Formulate your topic or question in one sentence.",
+    "intro_placeholder": "Enter a topic or question...",
+    "intro_start_button": "Start"
 }
