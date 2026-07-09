@@ -1,15 +1,7 @@
 <script lang="ts">
     import { m } from "$lib/paraglide/messages.js";
-
-    type ExternalLink = {
-        href: string;
-        icon: string;
-    };
-
-    const externalLinks: ExternalLink[] = [
-        { icon: "🚀", href: "https://github.com/yourprofile" },
-        { icon: "👤", href: "https://linkedin.com/in/yourprofile" },
-    ];
+    import Cognition2Icon from "@iconify-svelte/material-symbols-light/cognition-2";
+    import { resolve } from "$app/paths";
 
     let {
         ontogglesidebar = () => {},
@@ -18,11 +10,6 @@
         ontogglesidebar: () => void;
         sidebaropen: boolean;
     } = $props();
-
-    function linkLabel(href: string): string {
-        if (href === "https://github.com/yourprofile") return m.my_projects();
-        return m.about_me();
-    }
 </script>
 
 <header
@@ -47,23 +34,26 @@
             {/if}
         </button>
 
-        <h1 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
-            {m.app_title()}
-        </h1>
+        <Cognition2Icon height="2em" class="text-gray-600 dark:text-gray-200" />
+
+        <h1 class="text-lg font-semibold text-gray-800 dark:text-gray-200">{m.app_title()}</h1>
     </div>
 
     <div class="flex items-center gap-4">
-        {#each externalLinks as link (link)}
-            <!-- eslint-disable-next-line svelte/no-navigation-without-resolve --><a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400
+        <a
+            href={resolve("/")}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400
                        hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-            >
-                <span>{link.icon}</span>
-                <span class="hidden sm:inline">{linkLabel(link.href)}</span>
-            </a>
-        {/each}
+        >
+            <!-- @ts-ignore -->
+            <enhanced:img
+                src="$lib/assets/nerobrain.png?w=24"
+                alt="Описание изображения"
+                formats={["avif", "webp", "png"]}
+            />
+            <span class="hidden sm:inline">{m.about_me()}</span>
+        </a>
     </div>
 </header>

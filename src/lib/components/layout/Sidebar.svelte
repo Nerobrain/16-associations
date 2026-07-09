@@ -3,20 +3,23 @@
     import { resolve } from "$app/paths";
     import { m } from "$lib/paraglide/messages.js";
     import { setLocale, locales } from "$lib/paraglide/runtime";
-
+    import MenuBookOutlineIcon from "@iconify-svelte/material-symbols-light/menu-book-outline";
+    import AddNotesOutlineIcon from "@iconify-svelte/material-symbols-light/add-notes-outline";
+    import SourceNotesOutlineIcon from "@iconify-svelte/material-symbols-light/source-notes-outline";
+    import SettingsOutlineIcon from "@iconify-svelte/material-symbols-light/settings-outline";
     type Locale = (typeof locales)[number];
 
     type NavItem = {
-        icon: string;
+        icon: typeof MenuBookOutlineIcon;
         route: "/" | "/session" | "/history" | "/settings";
         label: string;
     };
 
     const navItems: NavItem[] = [
-        { icon: "📖", route: "/", label: m.nav_info() },
-        { icon: "📝", route: "/session", label: m.nav_session() },
-        { icon: "📊", route: "/history", label: m.nav_history() },
-        { icon: "⚙️", route: "/settings", label: m.nav_settings() },
+        { icon: MenuBookOutlineIcon, route: "/", label: m.nav_info() },
+        { icon: AddNotesOutlineIcon, route: "/session", label: m.nav_session() },
+        { icon: SourceNotesOutlineIcon, route: "/history", label: m.nav_history() },
+        { icon: SettingsOutlineIcon, route: "/settings", label: m.nav_settings() },
     ];
 
     type LocaleBtn = {
@@ -50,7 +53,7 @@
                     ? 'bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800'}"
             >
-                <span>{item.icon}</span>
+                <span><item.icon height="1.3em" /></span>
                 {item.label}
             </a>
         {/each}

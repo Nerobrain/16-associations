@@ -3,29 +3,26 @@ import tailwindcss from "@tailwindcss/vite";
 import adapter from "@sveltejs/adapter-static";
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
+import { enhancedImages } from "@sveltejs/enhanced-img";
 
 const base = process.env.BASE_PATH || "";
 const normalizedBase = base && (!base.startsWith("/") ? `/${base}` : base);
 
 export default defineConfig({
     plugins: [
+        enhancedImages(),
         tailwindcss(),
         sveltekit({
             compilerOptions: {
                 // Force runes mode for the project, except for libraries. Can be removed in svelte 6.
-                runes: ({ filename }) =>
-                    filename.split(/[/\\]/).includes("node_modules")
-                        ? undefined
-                        : true,
+                runes: ({ filename }) => (filename.split(/[/\\]/).includes("node_modules") ? undefined : true),
             },
             adapter: adapter({
                 precompress: true,
                 fallback: "404.html",
             }),
             paths: {
-                base: process.argv.includes("dev")
-                    ? ""
-                    : (normalizedBase as "" | `/${string}`),
+                base: process.argv.includes("dev") ? "" : (normalizedBase as "" | `/${string}`),
             },
         }),
         paraglideVitePlugin({
