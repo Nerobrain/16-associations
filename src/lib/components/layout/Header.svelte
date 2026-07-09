@@ -48,11 +48,7 @@
                        hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
             <!-- @ts-ignore -->
-            <enhanced:img
-                src="$lib/assets/nerobrain.png?w=24"
-                alt="Описание изображения"
-                formats={["avif", "webp", "png"]}
-            />
+            <enhanced:img src="$lib/assets/nerobrain.png?w=24" alt="nerobrain" />
             <span class="hidden sm:inline">{m.about_me()}</span>
         </a>
     </div>
