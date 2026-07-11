@@ -4,6 +4,7 @@
     import MicIcon from "@iconify-svelte/material-symbols-light/mic";
     import Hint from "$lib/components/ui/Hint.svelte";
     import Tooltip from "../ui/Tooltip.svelte";
+    import Progressbar from "../ui/Progressbar.svelte";
 
     const limit = 16;
 
@@ -49,13 +50,15 @@
 </div>
 
 <div class="mb-4 h-14" id="lastone">
-    {#if step > 1 && step < limit + 1}
+    {#if step > 1 && step <= limit}
         <p>Предыдущее слово</p>
         <p
             class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
         >
             {step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""}
         </p>
+    {:else if step > limit}
+        <p><strong class="text-indigo-600">Что объединяет</strong> эти два слова?</p>
     {/if}
 </div>
 
@@ -78,17 +81,7 @@
 
 <Hint text={hints} />
 
-<div class="mt-6 mb-4">
-    <h2 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Ассоциация {step} из {limit}</h2>
-    <div class="flex rounded-full overflow-hidden">
-        {#each { length: limit }, i}
-            <div
-                class="h-2 flex-1 transition-colors {i < step ? 'bg-indigo-500 ' : 'bg-gray-200 dark:bg-gray-700'}
-                    {i == step - 1 ? 'rounded-r-full' : ''}"
-            ></div>
-        {/each}
-    </div>
-</div>
+<Progressbar title="Ассоциация {step} из {limit}" {step} {limit} />
 
 <div class="flex justify-between mt-4">
     <button
