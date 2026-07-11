@@ -26,41 +26,44 @@
     }
 
     function goNext() {
-        step = analysisStore.step;
         analysisStore.pushAnswer(inputValue);
+        step = analysisStore.step;
         inputValue = "";
     }
 
     function handleKeydown(event: KeyboardEvent) {
-      if (event.key === 'Enter') {
-        event.preventDefault(); // предотвращаем отправку формы, если есть
-        goNext();
-      }
+        if (event.key === "Enter") {
+            event.preventDefault(); // предотвращаем отправку формы, если есть
+            goNext();
+        }
     }
 </script>
 
-<h1 class="text-2xl font-bold">Тема: {theme}</h1>
+<div class="mb-4">
+    <p>Тема</p>
+    <p
+        class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
+    >
+        {theme}
+    </p>
+</div>
 
-{#if step > 1 && step < limit}
-    <h2>{step}.{analysisStore.ansvers[step - 2]}</h2>
-{/if}
-
-<div class="mt-6 mb-4">
-    <h2 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Ассоциация {step} из {limit}</h2>
-    <div class="flex rounded-full overflow-hidden">
-        {#each { length: limit }, i}
-            <div
-                class="h-2 flex-1 transition-colors {i < step ? 'bg-indigo-500 ' : 'bg-gray-200 dark:bg-gray-700'}
-                    {i == step - 1 ? 'rounded-r-full' : ''}"
-            ></div>
-        {/each}
-    </div>
+<div class="mb-4 h-14" id="lastone">
+    {#if step > 1 && step < limit + 1}
+        <p>Предыдущее слово</p>
+        <p
+            class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
+        >
+            {step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""}
+        </p>
+    {/if}
 </div>
 
 <div class="flex w-full gap-0 mb-4">
     <input
         type="text"
         bind:value={inputValue}
+        onkeydown={handleKeydown}
         placeholder="Введите ассоциацию..."
         class="flex-11/12 md:flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-600"
     />
@@ -74,6 +77,18 @@
 </div>
 
 <Hint text={hints} />
+
+<div class="mt-6 mb-4">
+    <h2 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Ассоциация {step} из {limit}</h2>
+    <div class="flex rounded-full overflow-hidden">
+        {#each { length: limit }, i}
+            <div
+                class="h-2 flex-1 transition-colors {i < step ? 'bg-indigo-500 ' : 'bg-gray-200 dark:bg-gray-700'}
+                    {i == step - 1 ? 'rounded-r-full' : ''}"
+            ></div>
+        {/each}
+    </div>
+</div>
 
 <div class="flex justify-between mt-4">
     <button

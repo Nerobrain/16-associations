@@ -20,16 +20,24 @@ function setTheme(theme: string) {
 }
 
 function pushAnswer(answer: string): Analysis {
+    answer = answer.toLowerCase();
     if (analysis.ansvers == undefined) {
         analysis.ansvers = [answer];
     } else {
         analysis.ansvers.push(answer);
     }
+    if (browser) {
+        localStorage.setItem(stateStorageKey, JSON.stringify(analysis));
+    }
     return analysis;
 }
 
 function popAnswer(): string {
-    return analysis.ansvers.pop() || "";
+    const result = analysis.ansvers.pop() || "";
+    if (browser) {
+        localStorage.setItem(stateStorageKey, JSON.stringify(analysis));
+    }
+    return result;
 }
 
 // Экспортируем состояние и функцию для его изменения

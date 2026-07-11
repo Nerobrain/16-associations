@@ -6,6 +6,6 @@
 
 {#if !analysisStore.theme}
     <Intro />
-{:else if !analysisStore.ansvers || analysisStore.ansvers.length < 16}
+{:else if !analysisStore.ansvers || analysisStore.ansvers.length < 32}
     <StepOne />
 {/if}
