@@ -13,15 +13,16 @@
 
 <div class="text-base">{m.intro_description()}</div>
 
-<textarea
+<input
+    type="text"
     name="theme"
-    id="theme"
     bind:value={inputValue}
     placeholder={m.intro_placeholder()}
     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-></textarea>
+/>
 
 <button
+    disabled={!inputValue}
     onclick={handleSave}
     class="mt-4 w-20 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
 >

@@ -8,9 +8,7 @@ type Analysis = {
 };
 
 // Создаём реактивное состояние
-const saved = browser
-    ? JSON.parse(localStorage.getItem(stateStorageKey) || "{}")
-    : {};
+const saved = browser ? JSON.parse(localStorage.getItem(stateStorageKey) || "{}") : {};
 const analysis = $state<Analysis>(saved);
 
 // Функция для обновления
@@ -22,7 +20,11 @@ function setTheme(theme: string) {
 }
 
 function pushAnswer(answer: string): Analysis {
-    analysis.ansvers.push(answer);
+    if (analysis.ansvers == undefined) {
+        analysis.ansvers = [answer];
+    } else {
+        analysis.ansvers.push(answer);
+    }
     return analysis;
 }
 
@@ -32,8 +34,14 @@ function popAnswer(): string {
 
 // Экспортируем состояние и функцию для его изменения
 export const analysisStore = {
-    get states() {
-        return analysis;
+    get ansvers(): string[] {
+        return analysis.ansvers;
+    },
+    get theme(): string {
+        return analysis.theme;
+    },
+    get step(): number {
+        return !analysis.ansvers ? 1 : analysis.ansvers.length + 1;
     },
     setTheme,
     pushAnswer,
