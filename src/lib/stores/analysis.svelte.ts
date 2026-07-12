@@ -54,4 +54,11 @@ export const analysisStore = {
     setTheme,
     pushAnswer,
     popAnswer,
+    flush() {
+        analysis.theme = "";
+        analysis.ansvers = [];
+        if (browser) {
+            localStorage.removeItem(stateStorageKey);
+        }
+    },
 };

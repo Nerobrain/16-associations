@@ -1,10 +1,14 @@
 <script lang="ts">
+    import { v7 as uuidv7 } from "uuid";
     import { analysisStore } from "$lib/stores/analysis.svelte";
 
     import MicIcon from "@iconify-svelte/material-symbols-light/mic";
     import Hint from "$lib/components/ui/Hint.svelte";
     import Tooltip from "../ui/Tooltip.svelte";
     import Progressbar from "../ui/Progressbar.svelte";
+    import { saveRecord } from "$lib/stores/db.svelte";
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
 
     const limit = 16;
 
@@ -29,6 +33,13 @@
     function goNext() {
         analysisStore.pushAnswer(inputValue);
         step = analysisStore.step;
+        if (step > 31) {
+            const id = uuidv7();
+            saveRecord(id, analysisStore.theme, [...analysisStore.ansvers])
+                .then(() => analysisStore.flush())
+                .catch(() => {});
+            goto(resolve(`/goal/[id]`, { id }));
+        }
         inputValue = "";
     }
 
