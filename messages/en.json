@@ -44,5 +44,10 @@
     "step_input_placeholder": "Enter an association...",
     "step_progress": "Association {substep} of {limit}",
     "step_back": "Back",
-    "step_next": "Next"
+    "step_next": "Next",
+    "settings_date_format": "Date and time format",
+    "settings_date_format_full": "December 31, 2025, 2:30:00 PM",
+    "settings_date_format_datetime": "12/31/2025 2:30 PM",
+    "settings_date_format_date": "12/31/2025",
+    "settings_date_format_iso": "2025-12-31T14:30:00"
 }

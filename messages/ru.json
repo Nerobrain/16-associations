@@ -44,5 +44,10 @@
     "step_input_placeholder": "Введите ассоциацию...",
     "step_progress": "Ассоциация {substep} из {limit}",
     "step_back": "Назад",
-    "step_next": "Далее"
+    "step_next": "Далее",
+    "settings_date_format": "Формат даты и времени",
+    "settings_date_format_full": "31 декабря 2025 г., 14:30:00",
+    "settings_date_format_datetime": "31.12.2025 14:30",
+    "settings_date_format_date": "31.12.2025",
+    "settings_date_format_iso": "2025-12-31T14:30:00"
 }
