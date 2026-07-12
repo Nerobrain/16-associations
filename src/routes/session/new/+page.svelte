@@ -1,15 +1,19 @@
 <script lang="ts">
     import { analysisStore } from "$lib/stores/analysis.svelte";
     import { m } from "$lib/paraglide/messages.js";
+    import InputGroup from "$lib/components/ui/InputGroup.svelte";
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
 
-    let inputValue = $state("");
+    let inputValue = $state(analysisStore.theme);
 
     function goNext() {
         analysisStore.setTheme(inputValue);
+        goto(resolve("/session/step-one"));
     }
     function handleKeydown(event: KeyboardEvent) {
         if (event.key === "Enter") {
-            event.preventDefault(); // предотвращаем отправку формы, если есть
+            event.preventDefault();
             goNext();
         }
     }
@@ -19,14 +23,7 @@
 
 <div class="text-base">{m.intro_description()}</div>
 
-<input
-    type="text"
-    name="theme"
-    bind:value={inputValue}
-    onkeydown={handleKeydown}
-    placeholder={m.intro_placeholder()}
-    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-/>
+<InputGroup bind:value={inputValue} onkeydown={handleKeydown} placeholder={m.intro_placeholder()} />
 
 <button
     disabled={!inputValue}

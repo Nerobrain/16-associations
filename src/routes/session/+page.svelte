@@ -1,11 +1,14 @@
 <script lang="ts">
     import { analysisStore } from "$lib/stores/analysis.svelte";
-    import Intro from "$lib/components/session/Intro.svelte";
-    import StepOne from "$lib/components/session/StepOne.svelte";
-</script>
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
+    import { onMount } from "svelte";
 
-{#if !analysisStore.theme}
-    <Intro />
-{:else if !analysisStore.ansvers || analysisStore.ansvers.length < 32}
-    <StepOne />
-{/if}
+    onMount(() => {
+        if (!analysisStore.theme) {
+            goto(resolve("/session/new"));
+        } else {
+            goto(resolve("/session/step-one"));
+        }
+    });
+</script>

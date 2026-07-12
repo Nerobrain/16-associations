@@ -2,13 +2,14 @@
     import { v7 as uuidv7 } from "uuid";
     import { analysisStore } from "$lib/stores/analysis.svelte";
 
-    import MicIcon from "@iconify-svelte/material-symbols-light/mic";
+    import InputGroup from "$lib/components/ui/InputGroup.svelte";
     import Hint from "$lib/components/ui/Hint.svelte";
     import Tooltip from "../ui/Tooltip.svelte";
     import Progressbar from "../ui/Progressbar.svelte";
     import { saveRecord } from "$lib/stores/db.svelte";
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
+    import Bubble from "../ui/Bubble.svelte";
 
     const limit = 16;
 
@@ -23,7 +24,7 @@
 
     function goBack() {
         if (step == 1) {
-            analysisStore.setTheme("");
+            goto(resolve("/session/new"));
         } else {
             inputValue = analysisStore.popAnswer();
             step = analysisStore.step;
@@ -84,54 +85,26 @@
 <!-- {$inspect(" row=", row, " step=", step, " offset=", offset, " rowLimit=", rowLimit, " substep=", substep)} -->
 
 <div class="mb-4">
-    <p>Тема</p>
-    <p
-        class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
-    >
-        {theme}
-    </p>
+    <p>Ваш запрос</p>
+    <Bubble title={theme} />
 </div>
 
 <div class="mb-4 h-14">
     {#if step > 1 && step <= limit}
         <p>Предыдущее слово</p>
-        <p
-            class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
-        >
-            {step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""}
-        </p>
-    {:else}
+        <Bubble title={step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""} />
+    {:else if step > limit}
         <p><strong>Что объединяет</strong> эти два слова?</p>
         <div class="flex inset-s-full gap-1">
-            <p
-                class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
-            >
-                {analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 2]}
-            </p>
+            <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 2]} />
             <p class="my-auto">и</p>
-            <p
-                class="w-fit py-1 px-3 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-lg"
-            >
-                {analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 1]}
-            </p>
+            <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 1]} />
         </div>
     {/if}
 </div>
 
 <div class="flex w-full gap-0 mb-4">
-    <input
-        type="text"
-        bind:value={inputValue}
-        onkeydown={handleKeydown}
-        placeholder="Введите ассоциацию..."
-        class="flex-11/12 md:flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-600"
-    />
-    <button
-        disabled
-        class="px-3 py-2 border border-l-0 border-gray-300 rounded-r-lg bg-gray-100 dark:bg-gray-700 dark:border-gray-600 text-gray-400 cursor-not-allowed"
-    >
-        <MicIcon class="w-5 h-5" />
-    </button>
+    <InputGroup bind:value={inputValue} onkeydown={handleKeydown} placeholder="Введите ассоциацию..." />
     <Tooltip text={hints} containerClass="flex-1 px-2 py-2 m-auto" />
 </div>
 
