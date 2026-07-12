@@ -33,5 +33,16 @@
     "intro_heading": "Что хотите исследовать?",
     "intro_description": "Сформулируйте тему или вопрос в одном предложении.",
     "intro_placeholder": "Введите тему или вопрос...",
-    "intro_start_button": "Начать"
+    "intro_start_button": "Начать",
+    "step_one_label_topic": "Ваш запрос",
+    "step_one_label_previous": "Предыдущее слово",
+    "step_one_combine_bold": "Что объединяет",
+    "step_one_combine_rest": " эти два слова?",
+    "step_one_and": "и",
+    "step_one_hint_1": "Записывайте первое слово или словосочетание, которое прийдёт в голову.",
+    "step_one_hint_2": "Не анализируйте. Не ищите «правильный» ответ. Старайтесь не повторяться",
+    "step_one_input_placeholder": "Введите ассоциацию...",
+    "step_one_progress": "Ассоциация {substep} из {limit}",
+    "step_one_back": "Назад",
+    "step_one_next": "Далее"
 }

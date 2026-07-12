@@ -11,6 +11,7 @@
     import { resolve } from "$app/paths";
     import Bubble from "../ui/Bubble.svelte";
     import Label from "../ui/Label.svelte";
+    import { m } from "$lib/paraglide/messages.js";
 
     const limit = 16;
 
@@ -18,8 +19,8 @@
     let step = $state(analysisStore.step);
 
     const hints = [
-        "Записывайте первое слово или словосочетание, которое прийдёт в голову.",
-        "Не анализируйте. Не ищите «правильный» ответ. Старайтесь не повторяться",
+        m.step_one_hint_1(),
+        m.step_one_hint_2(),
     ];
     const theme = analysisStore.theme;
 
@@ -83,48 +84,46 @@
     let { rowLimit, offset, substep } = $derived(getSubstep(step, limit));
 </script>
 
-<!-- {$inspect(" row=", row, " step=", step, " offset=", offset, " rowLimit=", rowLimit, " substep=", substep)} -->
-
 <div class="mb-4">
-    <Label>Ваш запрос</Label>
+    <Label>{m.step_one_label_topic()}</Label>
     <Bubble title={theme} />
 </div>
 
 <div class="mb-4 h-14">
     {#if step > 1 && step <= limit}
-        <Label>Предыдущее слово</Label>
+        <Label>{m.step_one_label_previous()}</Label>
         <Bubble title={step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""} />
     {:else if step > limit}
-        <Label><strong>Что объединяет</strong> эти два слова?</Label>
+        <Label><strong>{m.step_one_combine_bold()}</strong>{m.step_one_combine_rest()}</Label>
         <div class="flex inset-s-full gap-1">
             <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 2]} />
-            <p class="my-auto">и</p>
+            <p class="my-auto">{m.step_one_and()}</p>
             <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 1]} />
         </div>
     {/if}
 </div>
 
 <div class="flex w-full gap-0 mb-4">
-    <InputGroup bind:value={inputValue} onkeydown={handleKeydown} placeholder="Введите ассоциацию..." />
+    <InputGroup bind:value={inputValue} onkeydown={handleKeydown} placeholder={m.step_one_input_placeholder()} />
     <Tooltip text={hints} containerClass="flex-1 px-2 py-2 m-auto" />
 </div>
 
 <Hint text={hints} />
 
-<Progressbar title="Ассоциация {substep} из {rowLimit}" step={substep} limit={rowLimit} />
+<Progressbar title={m.step_one_progress({ substep, limit: rowLimit })} step={substep} limit={rowLimit} />
 
 <div class="flex justify-between mt-4">
     <button
         onclick={() => goBack()}
         class="px-5 py-1.5 text-sm border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
     >
-        Назад
+        {m.step_one_back()}
     </button>
     <button
         onclick={() => goNext()}
         disabled={!inputValue}
         class="px-5 py-1.5 text-sm rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
     >
-        Далее
+        {m.step_one_next()}
     </button>
 </div>
