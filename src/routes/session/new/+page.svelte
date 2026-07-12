@@ -9,7 +9,7 @@
 
     function goNext() {
         analysisStore.setTheme(inputValue);
-        goto(resolve("/session/step-one"));
+        goto(resolve("/session/step"));
     }
     function handleKeydown(event: KeyboardEvent) {
         if (event.key === "Enter") {

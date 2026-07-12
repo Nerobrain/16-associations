@@ -4,13 +4,13 @@
 
     import InputGroup from "$lib/components/ui/InputGroup.svelte";
     import Hint from "$lib/components/ui/Hint.svelte";
-    import Tooltip from "../ui/Tooltip.svelte";
-    import Progressbar from "../ui/Progressbar.svelte";
+    import Tooltip from "$lib/components/ui/Tooltip.svelte";
+    import Progressbar from "$lib/components/ui/Progressbar.svelte";
     import { saveRecord } from "$lib/stores/db.svelte";
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
-    import Bubble from "../ui/Bubble.svelte";
-    import Label from "../ui/Label.svelte";
+    import Bubble from "$lib/components/ui/Bubble.svelte";
+    import Label from "$lib/components/ui/Label.svelte";
     import { m } from "$lib/paraglide/messages.js";
 
     const limit = 16;
@@ -18,10 +18,7 @@
     let inputValue = $state("");
     let step = $state(analysisStore.step);
 
-    const hints = [
-        m.step_one_hint_1(),
-        m.step_one_hint_2(),
-    ];
+    const hints = [m.step_hint_1(), m.step_hint_2()];
     const theme = analysisStore.theme;
 
     function goBack() {
@@ -85,45 +82,45 @@
 </script>
 
 <div class="mb-4">
-    <Label>{m.step_one_label_topic()}</Label>
+    <Label><strong>{m.step_label_topic()}</strong></Label>
     <Bubble title={theme} />
 </div>
 
 <div class="mb-4 h-14">
     {#if step > 1 && step <= limit}
-        <Label>{m.step_one_label_previous()}</Label>
+        <Label><strong>{m.step_label_previous()}</strong></Label>
         <Bubble title={step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""} />
     {:else if step > limit}
-        <Label><strong>{m.step_one_combine_bold()}</strong>{m.step_one_combine_rest()}</Label>
+        <Label><strong>{m.step_combine_bold()}</strong>{m.step_combine_rest()}</Label>
         <div class="flex inset-s-full gap-1">
             <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 2]} />
-            <p class="my-auto">{m.step_one_and()}</p>
+            <p class="my-auto">{m.step_and()}</p>
             <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 1]} />
         </div>
     {/if}
 </div>
 
 <div class="flex w-full gap-0 mb-4">
-    <InputGroup bind:value={inputValue} onkeydown={handleKeydown} placeholder={m.step_one_input_placeholder()} />
+    <InputGroup bind:value={inputValue} onkeydown={handleKeydown} placeholder={m.step_input_placeholder()} />
     <Tooltip text={hints} containerClass="flex-1 px-2 py-2 m-auto" />
 </div>
 
 <Hint text={hints} />
 
-<Progressbar title={m.step_one_progress({ substep, limit: rowLimit })} step={substep} limit={rowLimit} />
+<Progressbar title={m.step_progress({ substep, limit: rowLimit })} step={substep} limit={rowLimit} />
 
 <div class="flex justify-between mt-4">
     <button
         onclick={() => goBack()}
         class="px-5 py-1.5 text-sm border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
     >
-        {m.step_one_back()}
+        {m.step_back()}
     </button>
     <button
         onclick={() => goNext()}
         disabled={!inputValue}
         class="px-5 py-1.5 text-sm rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
     >
-        {m.step_one_next()}
+        {m.step_next()}
     </button>
 </div>

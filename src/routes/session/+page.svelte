@@ -8,7 +8,7 @@
         if (!analysisStore.theme) {
             goto(resolve("/session/new"));
         } else {
-            goto(resolve("/session/step-one"));
+            goto(resolve("/session/step"));
         }
     });
 </script>
