@@ -1,9 +1,11 @@
 <script lang="ts">
+    import Label from "./Label.svelte";
+
     let { title, step, limit }: { title: string; step: number; limit: number } = $props();
 </script>
 
 <div class="mt-6 mb-4">
-    <h2 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{title}</h2>
+    <Label>{title}</Label>
     <div class="flex rounded-full overflow-hidden">
         {#each { length: limit }, i}
             <div

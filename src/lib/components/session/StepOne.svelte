@@ -10,6 +10,7 @@
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import Bubble from "../ui/Bubble.svelte";
+    import Label from "../ui/Label.svelte";
 
     const limit = 16;
 
@@ -85,16 +86,16 @@
 <!-- {$inspect(" row=", row, " step=", step, " offset=", offset, " rowLimit=", rowLimit, " substep=", substep)} -->
 
 <div class="mb-4">
-    <p>Ваш запрос</p>
+    <Label>Ваш запрос</Label>
     <Bubble title={theme} />
 </div>
 
 <div class="mb-4 h-14">
     {#if step > 1 && step <= limit}
-        <p>Предыдущее слово</p>
+        <Label>Предыдущее слово</Label>
         <Bubble title={step > 1 ? `${analysisStore.ansvers[step - 2]}` : ""} />
     {:else if step > limit}
-        <p><strong>Что объединяет</strong> эти два слова?</p>
+        <Label><strong>Что объединяет</strong> эти два слова?</Label>
         <div class="flex inset-s-full gap-1">
             <Bubble title={analysisStore.ansvers[offset - rowLimit * 2 + substep * 2 - 2]} />
             <p class="my-auto">и</p>
