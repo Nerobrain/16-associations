@@ -53,7 +53,7 @@ export async function deleteRecord(id: string): Promise<void> {
 }
 
 // Чтение следующих N записей, начиная с lastID (исключительно)
-export async function loadMore(lastID: string | null, limit: number) {
+export async function loadMore(lastID: string | null, limit: number): Promise<{ id: string; theme: string }[]> {
     const db = await openDB();
     const tx = db.transaction(tableName, "readonly");
     const store = tx.objectStore(tableName);
@@ -64,7 +64,7 @@ export async function loadMore(lastID: string | null, limit: number) {
 
     const request = store.openCursor(range, "prev"); // сортировка по убыванию
     const results: { id: string; theme: string }[] = [];
-    return new Promise((resolve, reject) => {
+    return new Promise<{ id: string; theme: string }[]>((resolve, reject) => {
         request.onsuccess = () => {
             const cursor = request.result;
             if (cursor && results.length < limit) {
