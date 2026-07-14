@@ -34,7 +34,8 @@
 
     function buildMarkdown(): string {
         if (words.length < 31) return "";
-        let md = `# ${m.markdown_theme()}: ${theme}\n\n`;
+        let md = `# ${m.markdown_prompt_role()}\n\n`;
+        md += `# ${m.markdown_prompt_context({ theme: theme })}\n\n`;
         md += `## ${m.markdown_row1()}\n`;
         for (let i = 0; i < 16; i++) {
             md += `${i + 1}. ${words[i]}\n`;
@@ -52,7 +53,8 @@
             md += `${i - 27}. ${words[i]}\n`;
         }
         md += `\n## ${m.markdown_final()}\n`;
-        md += `**${words[30]}**\n`;
+        md += `**${words[30]}**\n\n`;
+        md += m.markdown_prompt_task();
         return md;
     }
 
@@ -89,10 +91,13 @@
             <p>{m.markdown_ai_intro()}</p>
         </div>
 
-        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <h2 class="text-lg font-semibold text-amber-800 mb-2">{m.markdown_warning_title()}</h2>
-            <p class="text-amber-700">{m.markdown_warning_text()}</p>
-        </div>
+        <details class="group bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <summary class="text-lg font-semibold text-amber-800 cursor-pointer list-none flex items-center justify-between">
+                {m.markdown_warning_title()}
+                <span class="text-amber-600 text-sm transition-transform group-open:rotate-180">▼</span>
+            </summary>
+            <p class="text-amber-700 mt-3">{m.markdown_warning_text()}</p>
+        </details>
 
         <div class="pt-4 border-t border-gray-200">
             <div class="flex items-center justify-between mb-3">
@@ -105,8 +110,7 @@
                 </button>
             </div>
             <pre
-                class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm overflow-x-auto whitespace-pre-wrap"
-            >{markdown}</pre>
+                class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm overflow-x-auto whitespace-pre-wrap">{markdown}</pre>
         </div>
 
         <div class="pt-4 border-t border-gray-200">
