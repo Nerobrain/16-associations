@@ -6,6 +6,7 @@
 
     import { page } from "$app/state";
     import { getRecord } from "$lib/stores/db.svelte";
+    import StyledMessage from "$lib/components/ui/StyledMessage.svelte";
 
     let theme = $state("");
     let treeData = $state<string[]>([]);
@@ -103,8 +104,7 @@
         </ul>
 
         <p class="text-sm text-gray-500 italic mt-4 text-center">
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->.
-            {@html m.result_recommendation()}
+            <StyledMessage message={m.result_recommendation} />
         </p>
 
         <div class="flex items-center gap-3 mt-6">
