@@ -49,5 +49,18 @@
     "settings_date_format_full": "December 31, 2025, 2:30:00 PM",
     "settings_date_format_datetime": "12/31/2025 2:30 PM",
     "settings_date_format_date": "12/31/2025",
-    "settings_date_format_iso": "2025-12-31T14:30:00"
+    "settings_date_format_iso": "2025-12-31T14:30:00",
+    "result_loading": "Loading...",
+    "result_not_found": "Record not found",
+    "result_theme": "Theme: «{theme}»",
+    "result_deep_image": "Your deep image",
+    "result_two_keys": "Two keys to the solution",
+    "result_q1": "Unexpected?",
+    "result_q2": "What do these three words have in common?",
+    "result_q3": "How does this change your perspective on the question?",
+    "result_recommendation": "Let this word stay with you for a day. <br /> Don't try to rethink it immediately. <br /> Write down any insights and revelations in your notes. <br /> Often the strongest insights come the next day.",
+    "result_hide_tree": "Hide tree",
+    "result_show_tree": "Show tree",
+    "result_export_pdf": "Export to PDF",
+    "result_export_md": "Export to Markdown"
 }
