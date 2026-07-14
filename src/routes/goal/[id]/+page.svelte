@@ -86,7 +86,7 @@
 {:else}
     <div class="flex flex-col items-center gap-4 max-w-xl mx-auto">
         <p class="text-sm text-gray-400">{m.result_theme({ theme })}</p>
-        
+
         <p class="text-4xl text-center font-bold mt-8">{treeData[treeData.length - 1]}</p>
         <p class="text-sm text-gray-400 -mt-3">{m.result_deep_image()}</p>
 
@@ -103,6 +103,7 @@
         </ul>
 
         <p class="text-sm text-gray-500 italic mt-4 text-center">
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->.
             {@html m.result_recommendation()}
         </p>
 

@@ -1,10 +1,8 @@
 <script lang="ts">
-    // Принимаем массив из 31 строки (или можно принимать любой массив, но проверяем длину)
     let {
         nodes = [],
         levelGapX = 150,
         nodeGapY = 2,
-        nodeHeight = 36,
         nodeColor = "#4F46E5",
         edgeColor = "#9CA3AF",
         textColor = "#FFFFFF",
@@ -17,7 +15,6 @@
         nodes?: string[];
         levelGapX?: number;
         nodeGapY?: number;
-        nodeHeight?: number;
         nodeColor?: string;
         edgeColor?: string;
         textColor?: string;
@@ -28,27 +25,9 @@
         nodePaddingX?: number;
     } = $props();
 
+    const nodeHeight = 36;
     const nodeRadius = 10;
-    const halfH = nodeHeight / 2;
 
-    // Проверка
-    if (nodes.length !== 31) {
-        console.warn("FullTree: ожидается ровно 31 элемент, получено", nodes.length);
-    }
-
-    // Размеры уровней
-    const LEVEL_SIZES = [16, 8, 4, 2, 1] as const;
-    const totalLevels = LEVEL_SIZES.length;
-
-    // Вычисляем начальные индексы каждого уровня
-    const levelStarts: number[] = [];
-    let offset = 0;
-    for (const size of LEVEL_SIZES) {
-        levelStarts.push(offset);
-        offset += size;
-    }
-
-    // Создаём массив узлов с координатами
     type NodeWithCoords = {
         id: number;
         text: string;
@@ -59,119 +38,145 @@
         width: number;
         halfW: number;
     };
-
-    // Ширина по тексту
-    function getNodeWidth(text: string): number {
-        const tw = text.length * fontSize * 0.6;
-        return Math.max(tw + nodePaddingX * 2, 20);
-    }
-
-    // Максимальная ширина каждого уровня
-    const levelNodeWidths = LEVEL_SIZES.map((_, i) => {
-        const start = levelStarts[i];
-        const end = start + LEVEL_SIZES[i];
-        const widths = nodes.slice(start, end).map(getNodeWidth);
-        return widths.length ? Math.max(...widths) : 0;
-    });
-
-    const verticalSpacing = nodeHeight + nodeGapY;
-    const marginX = 20;
-
-    // Вспомогательный массив для доступа по id
-    const positionedNodes: NodeWithCoords[] = new Array(nodes.length);
-
-    // Уровень 0: равномерно по вертикали
-    {
-        const startIdx = levelStarts[0];
-        const baseY = halfH;
-        const w = levelNodeWidths[0];
-        const hw = w / 2;
-        for (let j = 0; j < LEVEL_SIZES[0]; j++) {
-            const id = startIdx + j;
-            positionedNodes[id] = {
-                id,
-                text: nodes[id] || "",
-                x: marginX,
-                y: baseY + j * verticalSpacing,
-                level: 0,
-                indexInLevel: j,
-                width: w,
-                halfW: hw,
-            };
-        }
-    }
-
-    // Уровни 1–4: родитель по центру между двумя детьми
-    for (let levelIdx = 1; levelIdx < totalLevels; levelIdx++) {
-        const count = LEVEL_SIZES[levelIdx];
-        const startIdx = levelStarts[levelIdx];
-        const childStart = levelStarts[levelIdx - 1];
-        const x = marginX + levelIdx * levelGapX;
-        const w = levelNodeWidths[levelIdx];
-        const hw = w / 2;
-
-        for (let j = 0; j < count; j++) {
-            const id = startIdx + j;
-            const text = nodes[id] || "";
-
-            const leftChild = positionedNodes[childStart + j * 2];
-            const rightChild = positionedNodes[childStart + j * 2 + 1];
-
-            let y = (leftChild.y + rightChild.y) / 2;
-            if (levelIdx === totalLevels - 1 && count === 1) {
-                y -= (nodeHeight + nodeGapY) / 2;
-            }
-
-            positionedNodes[id] = {
-                id,
-                text,
-                x,
-                y,
-                level: levelIdx,
-                indexInLevel: j,
-                width: w,
-                halfW: hw,
-            };
-        }
-    }
-
-    // Строим рёбра
     type Edge = { fromId: number; toId: number };
-    const edges: Edge[] = [];
 
-    for (let levelIdx = 1; levelIdx < totalLevels; levelIdx++) {
-        const parentCount = LEVEL_SIZES[levelIdx];
-        const startParent = levelStarts[levelIdx];
-        const startChild = levelStarts[levelIdx - 1];
-
-        for (let j = 0; j < parentCount; j++) {
-            const parentId = startParent + j;
-            const leftChildId = startChild + j * 2;
-            const rightChildId = startChild + j * 2 + 1;
-            edges.push({ fromId: leftChildId, toId: parentId });
-            edges.push({ fromId: rightChildId, toId: parentId });
-        }
+    function getNodeWidth(text: string, fSize: number, pX: number): number {
+        const tw = text.length * fSize * 0.6;
+        return Math.max(tw + pX * 2, 20);
     }
 
-    // Функция для дуги (кривая Безье)
     function getEdgePath(from: { x: number; y: number }, to: { x: number; y: number }): string {
         const dx = to.x - from.x;
-        const dy = to.y - from.y;
         const cx = from.x + dx * 0.5;
         return `M ${from.x} ${from.y} C ${cx} ${from.y}, ${cx} ${to.y}, ${to.x} ${to.y}`;
     }
 
-    // Получаем размеры SVG
-    const validNodes = positionedNodes.filter(Boolean);
-    const minX = validNodes.length ? Math.min(...validNodes.map((n) => n.x - n.halfW)) : 0;
-    const minY = validNodes.length ? Math.min(...validNodes.map((n) => n.y - halfH)) : 0;
-    const maxX = validNodes.length ? Math.max(...validNodes.map((n) => n.x + n.halfW)) : 100;
-    const maxY = validNodes.length ? Math.max(...validNodes.map((n) => n.y + halfH)) : 100;
-    const pad = 20;
-    const viewBoxX = minX - pad;
-    const viewBoxY = minY - pad;
-    const svgWidth = maxX - minX + pad * 2;
-    const svgHeight = maxY - minY + pad * 2;
+    let svgWidth = $state(100);
+    let svgHeight = $state(100);
+    let viewBoxX = $state(0);
+    let viewBoxY = $state(0);
+    let edges = $state<Edge[]>([]);
+    let positionedNodes = $state<NodeWithCoords[]>([]);
+
+    $effect(() => {
+        const _nodes = nodes;
+        const _levelGapX = levelGapX;
+        const _nodeGapY = nodeGapY;
+        const _fontSize = fontSize;
+        const _nodePaddingX = nodePaddingX;
+
+        if (_nodes.length !== 31) {
+            console.warn("FullTree: ожидается ровно 31 элемент, получено", _nodes.length);
+        }
+
+        const LEVEL_SIZES = [16, 8, 4, 2, 1] as const;
+        const totalLevels = LEVEL_SIZES.length;
+
+        const levelStarts: number[] = [];
+        let offset = 0;
+        for (const size of LEVEL_SIZES) {
+            levelStarts.push(offset);
+            offset += size;
+        }
+
+        const levelNodeWidths = LEVEL_SIZES.map((_, i) => {
+            const start = levelStarts[i];
+            const end = start + LEVEL_SIZES[i];
+            const widths = _nodes.slice(start, end).map((t) => getNodeWidth(t, _fontSize, _nodePaddingX));
+            return widths.length ? Math.max(...widths) : 0;
+        });
+
+        const verticalSpacing = nodeHeight + _nodeGapY;
+        const marginX = 20;
+        const _positionedNodes: NodeWithCoords[] = new Array(_nodes.length);
+
+        // Уровень 0
+        {
+            const startIdx = levelStarts[0];
+            const baseY = nodeHeight / 2;
+            const w = levelNodeWidths[0];
+            const hw = w / 2;
+            for (let j = 0; j < LEVEL_SIZES[0]; j++) {
+                const id = startIdx + j;
+                _positionedNodes[id] = {
+                    id,
+                    text: _nodes[id] || "",
+                    x: marginX,
+                    y: baseY + j * verticalSpacing,
+                    level: 0,
+                    indexInLevel: j,
+                    width: w,
+                    halfW: hw,
+                };
+            }
+        }
+
+        // Уровни 1–4
+        for (let levelIdx = 1; levelIdx < totalLevels; levelIdx++) {
+            const count = LEVEL_SIZES[levelIdx];
+            const startIdx = levelStarts[levelIdx];
+            const childStart = levelStarts[levelIdx - 1];
+            const x = marginX + levelIdx * _levelGapX;
+            const w = levelNodeWidths[levelIdx];
+            const hw = w / 2;
+
+            for (let j = 0; j < count; j++) {
+                const id = startIdx + j;
+                const text = _nodes[id] || "";
+
+                const leftChild = _positionedNodes[childStart + j * 2];
+                const rightChild = _positionedNodes[childStart + j * 2 + 1];
+
+                let y = (leftChild.y + rightChild.y) / 2;
+                if (levelIdx === totalLevels - 1 && count === 1) {
+                    y -= (nodeHeight + _nodeGapY) / 2;
+                }
+
+                _positionedNodes[id] = {
+                    id,
+                    text,
+                    x,
+                    y,
+                    level: levelIdx,
+                    indexInLevel: j,
+                    width: w,
+                    halfW: hw,
+                };
+            }
+        }
+
+        // Рёбра
+        const _edges: Edge[] = [];
+        for (let levelIdx = 1; levelIdx < totalLevels; levelIdx++) {
+            const parentCount = LEVEL_SIZES[levelIdx];
+            const startParent = levelStarts[levelIdx];
+            const startChild = levelStarts[levelIdx - 1];
+
+            for (let j = 0; j < parentCount; j++) {
+                const parentId = startParent + j;
+                const leftChildId = startChild + j * 2;
+                const rightChildId = startChild + j * 2 + 1;
+                _edges.push({ fromId: leftChildId, toId: parentId });
+                _edges.push({ fromId: rightChildId, toId: parentId });
+            }
+        }
+
+        // Размеры SVG
+        const validNodes = _positionedNodes.filter(Boolean);
+        const halfH = nodeHeight / 2;
+        const minX = validNodes.length ? Math.min(...validNodes.map((n) => n.x - n.halfW)) : 0;
+        const minY = validNodes.length ? Math.min(...validNodes.map((n) => n.y - halfH)) : 0;
+        const maxX = validNodes.length ? Math.max(...validNodes.map((n) => n.x + n.halfW)) : 100;
+        const maxY = validNodes.length ? Math.max(...validNodes.map((n) => n.y + halfH)) : 100;
+        const pad = 20;
+
+        edges = _edges;
+        positionedNodes = _positionedNodes;
+        viewBoxX = minX - pad;
+        viewBoxY = minY - pad;
+        svgWidth = maxX - minX + pad * 2;
+        svgHeight = maxY - minY + pad * 2;
+    });
 </script>
 
 <svg
@@ -198,7 +203,7 @@
             <g transform="translate({node.x},{node.y})">
                 <rect
                     x={-node.halfW}
-                    y={-halfH}
+                    y={-nodeHeight / 2}
                     width={node.width}
                     height={nodeHeight}
                     rx={nodeRadius}
