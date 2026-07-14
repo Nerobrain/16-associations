@@ -70,7 +70,8 @@
     const levelNodeWidths = LEVEL_SIZES.map((_, i) => {
         const start = levelStarts[i];
         const end = start + LEVEL_SIZES[i];
-        return Math.max(...nodes.slice(start, end).map(getNodeWidth));
+        const widths = nodes.slice(start, end).map(getNodeWidth);
+        return widths.length ? Math.max(...widths) : 0;
     });
 
     const verticalSpacing = nodeHeight + nodeGapY;
@@ -161,15 +162,24 @@
     }
 
     // Получаем размеры SVG
-    const svgWidth = Math.max(...positionedNodes.map((n) => n.x + n.halfW)) + marginX;
-    const svgHeight = Math.max(...positionedNodes.map((n) => n.y + halfH));
+    const validNodes = positionedNodes.filter(Boolean);
+    const minX = validNodes.length ? Math.min(...validNodes.map((n) => n.x - n.halfW)) : 0;
+    const minY = validNodes.length ? Math.min(...validNodes.map((n) => n.y - halfH)) : 0;
+    const maxX = validNodes.length ? Math.max(...validNodes.map((n) => n.x + n.halfW)) : 100;
+    const maxY = validNodes.length ? Math.max(...validNodes.map((n) => n.y + halfH)) : 100;
+    const pad = 20;
+    const viewBoxX = minX - pad;
+    const viewBoxY = minY - pad;
+    const svgWidth = maxX - minX + pad * 2;
+    const svgHeight = maxY - minY + pad * 2;
 </script>
 
 <svg
-    width="100%"
-    viewBox="-70 -10 {svgWidth + 70} {svgHeight}"
+    width={svgWidth}
+    height={svgHeight}
+    viewBox="{viewBoxX} {viewBoxY} {svgWidth} {svgHeight}"
     xmlns="http://www.w3.org/2000/svg"
-    style="background: #f9fafb; border-radius: 12px;"
+    style="max-width: 100%; height: auto; background: #f9fafb; border-radius: 12px;"
 >
     <!-- Рёбра -->
     <g stroke={edgeColor} stroke-width={edgeStrokeWidth} fill="none">
