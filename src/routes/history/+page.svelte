@@ -4,6 +4,11 @@
     import { settingsStore } from "$lib/stores/settings.svelte";
     import { loadMore } from "$lib/stores/db.svelte";
     import { getLocale } from "$lib/paraglide/runtime.js";
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
+    import AccountTreeIcon from "@iconify-svelte/material-symbols-light/account-tree";
+    import PictureAsPdfIcon from "@iconify-svelte/material-symbols-light/picture-as-pdf";
+    import MarkdownIcon from "@iconify-svelte/material-symbols-light/markdown";
 
     let records: { id: string; theme: string }[] = $state([]);
 
@@ -46,10 +51,35 @@
     <ul class="space-y-2">
         {#each records as { id, theme } (id)}
             <li
-                class="flex justify-between items-center px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900"
+                class="flex flex-col-reverse md:flex-row px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900"
             >
-                <span class="font-medium text-gray-800 dark:text-gray-200">{theme}</span>
-                <span class="text-sm text-gray-500 dark:text-gray-400">{formatDate(dateFromUUID(id))}</span>
+                <div class="flex flex-col-reverse md:flex-row justify-between w-full my-auto">
+                    <span class="font-medium text-gray-800 dark:text-gray-200">{theme}</span>
+                    <span class="text-xs align-text-bottom text-gray-500 dark:text-gray-400"
+                        >{formatDate(dateFromUUID(id))}</span
+                    >
+                </div>
+                <div class="flex items-center gap-0">
+                    <button
+                        onclick={() => goto(resolve(`/goal/[id]`, { id: id }))}
+                        title="Просмотр"
+                        class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+                    >
+                        <AccountTreeIcon class="w-5 h-5" />
+                    </button>
+                    <button
+                        title="Экспорт в PDF"
+                        class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+                    >
+                        <PictureAsPdfIcon class="w-5 h-5" />
+                    </button>
+                    <button
+                        title="Экспорт в Markdown"
+                        class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+                    >
+                        <MarkdownIcon class="w-5 h-5" />
+                    </button>
+                </div>
             </li>
         {/each}
     </ul>
