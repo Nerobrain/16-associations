@@ -2,7 +2,8 @@
     // Принимаем массив из 31 строки (или можно принимать любой массив, но проверяем длину)
     let {
         nodes = [],
-        levelHeight = 90,
+        levelGapX = 150,
+        nodeGapY = 2,
         nodeHeight = 36,
         nodeColor = "#4F46E5",
         edgeColor = "#9CA3AF",
@@ -12,10 +13,10 @@
         edgeStrokeWidth = 2,
         showTextOnAllNodes = true,
         nodePaddingX = 12,
-        leafGap = 5,
     }: {
         nodes?: string[];
-        levelHeight?: number;
+        levelGapX?: number;
+        nodeGapY?: number;
         nodeHeight?: number;
         nodeColor?: string;
         edgeColor?: string;
@@ -25,11 +26,9 @@
         edgeStrokeWidth?: number;
         showTextOnAllNodes?: boolean;
         nodePaddingX?: number;
-        leafGap?: number;
     } = $props();
 
     const nodeRadius = 10;
-    const leafVerticalGap = 8;
     const halfH = nodeHeight / 2;
 
     // Проверка
@@ -61,64 +60,77 @@
         halfW: number;
     };
 
-    // Вычисляем максимальную ширину листа (по тексту)
-    let maxLeafNodeWidth = 0;
-    for (let i = 0; i < LEVEL_SIZES[0]; i++) {
-        const text = nodes[levelStarts[0] + i] || "";
-        const textWidth = text.length * fontSize * 0.6;
-        const width = Math.max(textWidth + nodePaddingX * 2, 20);
-        if (width > maxLeafNodeWidth) maxLeafNodeWidth = width;
+    // Ширина по тексту
+    function getNodeWidth(text: string): number {
+        const tw = text.length * fontSize * 0.6;
+        return Math.max(tw + nodePaddingX * 2, 20);
     }
 
-    // Расстояние между узлами: либо явно переданное leafWidth, либо вычисленное из самого широкого листа
-    const spacing = maxLeafNodeWidth + leafGap;
+    // Максимальная ширина каждого уровня
+    const levelNodeWidths = LEVEL_SIZES.map((_, i) => {
+        const start = levelStarts[i];
+        const end = start + LEVEL_SIZES[i];
+        return Math.max(...nodes.slice(start, end).map(getNodeWidth));
+    });
 
-    const positionedNodes: NodeWithCoords[] = [];
+    const verticalSpacing = nodeHeight + nodeGapY;
+    const marginX = 20;
 
-    // Максимальная ширина уровня для центрирования
-    const maxLeafCols = Math.ceil(LEVEL_SIZES[0] / 2);
-    const maxLevelWidth = (maxLeafCols - 1) * spacing;
-    const centerX = maxLevelWidth / 2;
+    // Вспомогательный массив для доступа по id
+    const positionedNodes: NodeWithCoords[] = new Array(nodes.length);
 
-    for (let levelIdx = 0; levelIdx < totalLevels; levelIdx++) {
+    // Уровень 0: равномерно по вертикали
+    {
+        const startIdx = levelStarts[0];
+        const baseY = halfH;
+        const w = levelNodeWidths[0];
+        const hw = w / 2;
+        for (let j = 0; j < LEVEL_SIZES[0]; j++) {
+            const id = startIdx + j;
+            positionedNodes[id] = {
+                id,
+                text: nodes[id] || "",
+                x: marginX,
+                y: baseY + j * verticalSpacing,
+                level: 0,
+                indexInLevel: j,
+                width: w,
+                halfW: hw,
+            };
+        }
+    }
+
+    // Уровни 1–4: родитель по центру между двумя детьми
+    for (let levelIdx = 1; levelIdx < totalLevels; levelIdx++) {
         const count = LEVEL_SIZES[levelIdx];
         const startIdx = levelStarts[levelIdx];
-        const isLeafLevel = levelIdx === 0;
-
-        const cols = isLeafLevel ? Math.ceil(count / 2) : count;
-        const levelWidth = (cols - 1) * spacing;
-        const startX = centerX - levelWidth / 2;
+        const childStart = levelStarts[levelIdx - 1];
+        const x = marginX + levelIdx * levelGapX;
+        const w = levelNodeWidths[levelIdx];
+        const hw = w / 2;
 
         for (let j = 0; j < count; j++) {
             const id = startIdx + j;
             const text = nodes[id] || "";
-            const textWidth = text.length * fontSize * 0.6;
-            const width = Math.max(textWidth + nodePaddingX * 2, 20);
-            const halfW = width / 2;
 
-            let x: number;
-            let y: number;
+            const leftChild = positionedNodes[childStart + j * 2];
+            const rightChild = positionedNodes[childStart + j * 2 + 1];
 
-            if (isLeafLevel) {
-                const col = Math.floor(j / 2);
-                const row = j % 2;
-                x = startX + col * spacing;
-                y = (totalLevels - 1 - levelIdx) * levelHeight + halfH + row * (nodeHeight + leafVerticalGap);
-            } else {
-                x = startX + j * spacing;
-                y = (totalLevels - 1 - levelIdx) * levelHeight + halfH;
+            let y = (leftChild.y + rightChild.y) / 2;
+            if (levelIdx === totalLevels - 1 && count === 1) {
+                y -= (nodeHeight + nodeGapY) / 2;
             }
 
-            positionedNodes.push({
+            positionedNodes[id] = {
                 id,
                 text,
                 x,
                 y,
                 level: levelIdx,
                 indexInLevel: j,
-                width,
-                halfW,
-            });
+                width: w,
+                halfW: hw,
+            };
         }
     }
 
@@ -149,15 +161,13 @@
     }
 
     // Получаем размеры SVG
-    const maxHalfW = positionedNodes.reduce((m, n) => Math.max(m, n.halfW), halfH);
-    const maxBottom = Math.max(...positionedNodes.map((n) => n.y + halfH));
-    const svgWidth = maxLevelWidth + 2 * maxHalfW;
-    const svgHeight = maxBottom;
+    const svgWidth = Math.max(...positionedNodes.map((n) => n.x + n.halfW)) + marginX;
+    const svgHeight = Math.max(...positionedNodes.map((n) => n.y + halfH));
 </script>
 
 <svg
     width="100%"
-    viewBox="{-maxHalfW} {0} {svgWidth} {svgHeight}"
+    viewBox="-70 -10 {svgWidth + 70} {svgHeight}"
     xmlns="http://www.w3.org/2000/svg"
     style="background: #f9fafb; border-radius: 12px;"
 >
