@@ -1,10 +1,13 @@
 <script lang="ts">
     import { m } from "$lib/paraglide/messages.js";
     import Tree from "$lib/components/ui/Tree.svelte";
+    import PictureAsPdfIcon from "@iconify-svelte/material-symbols-light/picture-as-pdf";
+    import MarkdownIcon from "@iconify-svelte/material-symbols-light/markdown";
 
     import { page } from "$app/state";
     import { getRecord } from "$lib/stores/db.svelte";
 
+    let theme = $state("");
     let treeData = $state<string[]>([]);
     let loading = $state(true);
     let error = $state<string | null>(null);
@@ -15,6 +18,7 @@
         getRecord(id)
             .then((record) => {
                 if (record) {
+                    theme = record.theme;
                     treeData = record.words;
                 } else {
                     error = "Запись не найдена";
@@ -80,16 +84,57 @@
 {:else if error}
     <p style="color: red;">{error}</p>
 {:else}
-    <button
-        onclick={() => (showTree = !showTree)}
-        class="mb-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg cursor-pointer"
-    >
-        {showTree ? "Скрыть дерево" : "Показать дерево ассоциаций"}
-    </button>
+    <div class="flex flex-col items-center gap-4 max-w-xl mx-auto">
+        <p class="text-sm text-gray-400">Тема: «{theme}»</p>
+        
+        <p class="text-4xl text-center font-bold mt-8">{treeData[treeData.length - 1]}</p>
+        <p class="text-sm text-gray-400 -mt-3">Ваш глубинный образ</p>
+
+        <div class="flex gap-4 mt-4 text-xl">
+            <span>{treeData[treeData.length - 2]}</span>
+            <span>{treeData[treeData.length - 3]}</span>
+        </div>
+        <p class="text-sm text-gray-400 -mt-3">Два ключа к решению</p>
+
+        <ul class="text-sm space-y-1 mt-4 list-disc list-inside text-gray-600 dark:text-gray-300">
+            <li>Неожиданно?</li>
+            <li>Что общего у этих трёх слов?</li>
+            <li>Как это меняет взгляд на вопрос?</li>
+        </ul>
+
+        <p class="text-sm text-gray-500 italic mt-4 text-center">
+            Позвольте этому слову побыть с вами сутки. <br />
+            Не пытайтесь сразу его переосмысливать. <br />
+            Записывайте возникающие догадки и озарения в заметки. <br />
+            Часто самые сильные инсайты приходят на следующий день.
+        </p>
+
+        <div class="flex items-center gap-3 mt-6">
+            <button
+                onclick={() => (showTree = !showTree)}
+                class="px-4 py-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg cursor-pointer text-sm"
+            >
+                {showTree ? "Скрыть дерево" : "Показать дерево"}
+            </button>
+            <button
+                title="Экспорт в PDF"
+                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+            >
+                <PictureAsPdfIcon class="w-5 h-5" />
+            </button>
+            <button
+                title="Экспорт в Markdown"
+                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+            >
+                <MarkdownIcon class="w-5 h-5" />
+            </button>
+        </div>
+    </div>
 
     {#if showTree}
         <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div
+            class="mt-4"
             style="overflow: hidden; touch-action: none; width: 100%; height: 100dvh; position: relative;"
             ontouchstart={handleTouchStart}
             ontouchmove={handleTouchMove}
