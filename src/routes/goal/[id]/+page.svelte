@@ -71,6 +71,8 @@
     function handleTouchEnd() {
         panning = false;
     }
+
+    let showTree = $state(false);
 </script>
 
 {#if loading}
@@ -78,16 +80,24 @@
 {:else if error}
     <p style="color: red;">{error}</p>
 {:else}
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div
-        class="mb-4"
-        style="overflow: hidden; touch-action: none; width: 100%; height: 100dvh; position: relative;"
-        ontouchstart={handleTouchStart}
-        ontouchmove={handleTouchMove}
-        ontouchend={handleTouchEnd}
+    <button
+        onclick={() => (showTree = !showTree)}
+        class="mb-2 px-4 py-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg cursor-pointer"
     >
-        <div style="transform: translate({panX}px, {panY}px) scale({zoom}); transform-origin: 0 0;">
-            <Tree nodes={treeData} />
+        {showTree ? "Скрыть дерево" : "Показать дерево ассоциаций"}
+    </button>
+
+    {#if showTree}
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div
+            style="overflow: hidden; touch-action: none; width: 100%; height: 100dvh; position: relative;"
+            ontouchstart={handleTouchStart}
+            ontouchmove={handleTouchMove}
+            ontouchend={handleTouchEnd}
+        >
+            <div style="transform: translate({panX}px, {panY}px) scale({zoom}); transform-origin: 0 0;">
+                <Tree nodes={treeData} />
+            </div>
         </div>
-    </div>
+    {/if}
 {/if}
