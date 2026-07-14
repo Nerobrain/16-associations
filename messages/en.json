@@ -74,5 +74,20 @@
     "result_hide_tree": "Hide tree",
     "result_show_tree": "Show tree",
     "result_export_pdf": "Export to PDF",
-    "result_export_md": "Export to Markdown"
+    "result_export_md": "Export to Markdown",
+    "title_markdown": "Export to Markdown",
+    "markdown_ai_title": "What is this for?",
+    "markdown_ai_intro": "You can copy your self-analysis results and paste them into a chat with AI (ChatGPT, Claude, Gemini, DeepSeek, and others) for further analysis and additional help with your self-reflection.",
+    "markdown_warning_title": "Important Warning",
+    "markdown_warning_text": "We do not recommend relying on AI to interpret your results. If you need psychological help, it is best to consult a professional. However, you should not completely ignore AI either. The key is to understand that only you can truly comprehend and make sense of your own thoughts. AI may lead you to incorrect conclusions, so approach its suggestions critically.",
+    "markdown_preview": "Result",
+    "markdown_copy_button": "Copy",
+    "markdown_copied": "Copied!",
+    "markdown_back_to_result": "Back to result",
+    "markdown_theme": "Theme",
+    "markdown_row1": "First row: 16 associations",
+    "markdown_row2": "Second row: 8 words",
+    "markdown_row3": "Third row: 4 words",
+    "markdown_row4": "Fourth row: 2 words",
+    "markdown_final": "Final word"
 }

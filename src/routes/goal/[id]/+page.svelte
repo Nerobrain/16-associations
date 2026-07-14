@@ -5,6 +5,8 @@
     import MarkdownIcon from "@iconify-svelte/material-symbols-light/markdown";
 
     import { page } from "$app/state";
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
     import { getRecord } from "$lib/stores/db.svelte";
     import StyledMessage from "$lib/components/ui/StyledMessage.svelte";
 
@@ -122,6 +124,7 @@
             </button>
             <button
                 title={m.result_export_md()}
+                onclick={() => { const id = page.params.id; if (id) goto(resolve("/markdown/[id]", { id })); }}
                 class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
             >
                 <MarkdownIcon class="w-5 h-5" />

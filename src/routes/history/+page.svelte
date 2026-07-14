@@ -68,13 +68,14 @@
                         <AccountTreeIcon class="w-5 h-5" />
                     </button>
                     <button
-                        title="Экспорт в PDF"
+                        title={m.result_export_pdf()}
                         class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
                     >
                         <PictureAsPdfIcon class="w-5 h-5" />
                     </button>
                     <button
-                        title="Экспорт в Markdown"
+                        title={m.result_export_md()}
+                        onclick={() => goto(resolve("/markdown/[id]", { id }))}
                         class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
                     >
                         <MarkdownIcon class="w-5 h-5" />
