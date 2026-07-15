@@ -41,15 +41,14 @@
 
     <div class="flex items-center gap-4">
         <a
-            href={resolve("/")}
-            target="_blank"
+            href={resolve("/about")}
             rel="noopener noreferrer"
-            class="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400
+            class="flex items-center text-sm text-gray-600 dark:text-gray-400
                        hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
             <!-- @ts-ignore -->
             <enhanced:img src="$lib/assets/nerobrain.png?w=24" alt="nerobrain" />
-            <span class="hidden sm:inline">{m.about_me()}</span>
+            <span class="hidden sm:inline">erobrain</span>
         </a>
     </div>
 </header>

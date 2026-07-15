@@ -2,7 +2,6 @@
     "$schema": "https://inlang.com/schema/inlang-message-format",
     "app_title": "16 Associations",
     "my_projects": "My Projects",
-    "about_me": "About Me",
     "toggle_sidebar": "Toggle sidebar",
     "nav_session": "Session",
     "nav_info": "About",
@@ -13,6 +12,7 @@
     "visit_prefix": "Visit",
     "visit_suffix": "to read the documentation",
     "paraglide_link": "paraglide",
+    "title_about": "About",
     "title_info": "About",
     "title_history": "History",
     "title_settings": "Settings",
@@ -94,5 +94,8 @@
     "markdown_row3": "Third row: 4 words",
     "markdown_row4": "Fourth row: 2 words",
     "markdown_final": "Final word",
-    "markdown_prompt_task": "**Task:**\n1. Analyze these associations in the context of the Jungian method.\n2. Considering that the 1st column is the \"reality level\" (social attitudes), and subsequent levels narrow down to the unconscious, suggest possible hidden feelings, beliefs, and the true cause of my state.\n3. Based on the final association (key), propose a possible direction for reflection or action.\n\n**Format:** Present the response as a brief psychological profile highlighting key insights and practical questions for self-reflection."
+    "markdown_prompt_task": "**Task:**\n1. Analyze these associations in the context of the Jungian method.\n2. Considering that the 1st column is the \"reality level\" (social attitudes), and subsequent levels narrow down to the unconscious, suggest possible hidden feelings, beliefs, and the true cause of my state.\n3. Based on the final association (key), propose a possible direction for reflection or action.\n\n**Format:** Present the response as a brief psychological profile highlighting key insights and practical questions for self-reflection.",
+    "nerobrain_title": "Why Nerobrain?",
+    "nerobrain_text": "I create solutions for problems I find interesting and important. I enjoy understanding complex systems, finding patterns, and eliminating the unnecessary until only what truly matters remains. For me, a good product is not one with more features, but one where every detail has meaning. That's why the Nerobrain philosophy is simple:",
+    "nerobrain_philosophy": "{#strong}Not less. Not more. Just right.{/strong}"
 }
