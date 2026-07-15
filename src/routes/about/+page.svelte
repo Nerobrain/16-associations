@@ -1,6 +1,10 @@
 <script lang="ts">
     import StyledMessage from "$lib/components/ui/StyledMessage.svelte";
     import { m } from "$lib/paraglide/messages.js";
+    import { asset } from "$app/paths";
+    import { getLocale } from "$lib/paraglide/runtime.js";
+
+    const localeSuffix = getLocale() === "ru" ? "ru" : "en";
 </script>
 
 <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{m.nerobrain_title()}</h1>
@@ -8,4 +12,6 @@
     {m.nerobrain_text()}
     <StyledMessage message={m.nerobrain_philosophy} />
 </p>
-###
+
+<img src={asset("/logo-light-" + localeSuffix + ".png")} alt="Nerobrain" class="block dark:hidden" />
+<img src={asset("/logo-dark-" + localeSuffix + ".png")} alt="Nerobrain" class="hidden dark:block" />

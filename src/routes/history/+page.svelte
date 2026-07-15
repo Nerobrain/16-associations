@@ -69,6 +69,7 @@
                     </button>
                     <button
                         title={m.result_export_pdf()}
+                        onclick={() => goto(resolve("/pdf/[id]", { id }))}
                         class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
                     >
                         <PictureAsPdfIcon class="w-5 h-5" />
