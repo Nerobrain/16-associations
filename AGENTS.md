@@ -24,6 +24,7 @@
 
 - **i18n**: Paraglide, базовая локаль `ru`, вторая `en`. Сгенерированные файлы: `src/lib/paraglide/` (gitignored).
 - **CSS**: Tailwind v4 — `@import 'tailwindcss'` в `src/routes/layout.css`. `tailwind.config.js` нет.
+- **Тёмная тема**: class-based через `@variant dark (&:where(.dark, .dark *))` в `layout.css`. Переключение в настройках (system/light/dark), по умолчанию `system`. Класс `.dark` на `<html>` управляется из `+layout.svelte`.
 - **Хранение**: текущая сессия — `localStorage` (ключ `analysis`), история — IndexedDB (`16Associations` / `sessions`).
 - **Роутинг**: SPA (adapter-static, `fallback: "404.html"`), `trailingSlash: "always"`.
 

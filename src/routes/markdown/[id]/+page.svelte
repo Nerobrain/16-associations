@@ -116,7 +116,7 @@
         <div class="pt-4 border-t border-gray-200">
             <a
                 href={page.params.id ? resolve("/goal/[id]", { id: page.params.id }) : "#"}
-                class="text-blue-600 hover:text-blue-800 underline"
+                class="text-indigo-600 hover:text-indigo-800 underline"
             >
                 {m.markdown_back_to_result()}
             </a>

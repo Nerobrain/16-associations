@@ -46,8 +46,8 @@
             class="flex items-center text-sm text-gray-600 dark:text-gray-400
                        hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
-            <!-- @ts-ignore -->
-            <enhanced:img src="$lib/assets/nerobrain.png?w=24" alt="nerobrain" />
+            <enhanced:img src="$lib/assets/n-dark.png?w=24" alt="N!" class="hidden dark:block" />
+            <enhanced:img src="$lib/assets/n-light.png?w=24" alt="N!" class="block dark:hidden" />
             <span class="hidden sm:inline">erobrain</span>
         </a>
     </div>
