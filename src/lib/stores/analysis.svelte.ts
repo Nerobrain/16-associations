@@ -4,7 +4,7 @@ const stateStorageKey = "analysis";
 
 type Analysis = {
     theme: string;
-    ansvers: string[];
+    answers: string[];
 };
 
 // Создаём реактивное состояние
@@ -21,10 +21,10 @@ function setTheme(theme: string) {
 
 function pushAnswer(answer: string): Analysis {
     answer = answer.toLowerCase();
-    if (analysis.ansvers == undefined) {
-        analysis.ansvers = [answer];
+    if (analysis.answers == undefined) {
+        analysis.answers = [answer];
     } else {
-        analysis.ansvers.push(answer);
+        analysis.answers.push(answer);
     }
     if (browser) {
         localStorage.setItem(stateStorageKey, JSON.stringify(analysis));
@@ -33,7 +33,7 @@ function pushAnswer(answer: string): Analysis {
 }
 
 function popAnswer(): string {
-    const result = analysis.ansvers.pop() || "";
+    const result = analysis.answers.pop() || "";
     if (browser) {
         localStorage.setItem(stateStorageKey, JSON.stringify(analysis));
     }
@@ -42,21 +42,21 @@ function popAnswer(): string {
 
 // Экспортируем состояние и функцию для его изменения
 export const analysisStore = {
-    get ansvers(): string[] {
-        return analysis.ansvers;
+    get answers(): string[] {
+        return analysis.answers;
     },
     get theme(): string {
         return analysis.theme;
     },
     get step(): number {
-        return !analysis.ansvers ? 1 : analysis.ansvers.length + 1;
+        return !analysis.answers ? 1 : analysis.answers.length + 1;
     },
     setTheme,
     pushAnswer,
     popAnswer,
     flush() {
         analysis.theme = "";
-        analysis.ansvers = [];
+        analysis.answers = [];
         if (browser) {
             localStorage.removeItem(stateStorageKey);
         }

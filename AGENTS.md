@@ -26,7 +26,6 @@
 - **CSS**: Tailwind v4 — `@import 'tailwindcss'` в `src/routes/layout.css`. `tailwind.config.js` нет.
 - **Хранение**: текущая сессия — `localStorage` (ключ `analysis`), история — IndexedDB (`16Associations` / `sessions`).
 - **Роутинг**: SPA (adapter-static, `fallback: "404.html"`), `trailingSlash: "always"`.
-- **Известный баг**: в `analysis.svelte.ts` свойство называется `ansvers` (опечатка), используется консистентно во всей кодовой базе.
 
 ## Окружение
 
