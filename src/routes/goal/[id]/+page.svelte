@@ -118,16 +118,18 @@
             </button>
             <button
                 title={m.result_export_pdf()}
-                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors flex items-center gap-1"
             >
                 <PictureAsPdfIcon class="w-5 h-5" />
+                <span class="text-xs">{m.result_share_pdf()}</span>
             </button>
             <button
                 title={m.result_export_md()}
                 onclick={() => { const id = page.params.id; if (id) goto(resolve("/markdown/[id]", { id })); }}
-                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+                class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors flex items-center gap-1"
             >
                 <MarkdownIcon class="w-5 h-5" />
+                <span class="text-xs">{m.result_ai_analysis()}</span>
             </button>
         </div>
     </div>

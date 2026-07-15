@@ -71,6 +71,8 @@
     "result_q2": "What do these three words have in common?",
     "result_q3": "How does this change your perspective on the question?",
     "result_recommendation": "Let this word stay with you for a day. {#br /} Don't try to rethink it immediately. {#br /} Write down any insights and revelations in your notes. {#br /} Often the strongest insights come the next day.",
+    "result_share_pdf": "Share",
+    "result_ai_analysis": "AI Analysis",
     "result_hide_tree": "Hide tree",
     "result_show_tree": "Show tree",
     "result_export_pdf": "Export to PDF",
