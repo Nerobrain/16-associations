@@ -28,6 +28,7 @@
 - **Хранение**: текущая сессия — `localStorage` (ключ `analysis`), история — IndexedDB (`16Associations` / `sessions`).
 - **Роутинг**: SPA (adapter-static, `fallback: "404.html"`), `trailingSlash: "always"`.
 - **Сборка**: `postbuild` копирует `build/index.html` → `build/404.html` для SPA fallback. `handleUnseenRoutes: 'ignore'` в `vite.config.ts` — динамические `[id]` маршруты не пререндерятся.
+- **Пути к статике**: используй `asset()` из `$app/paths` вместо `{base}` (шаблонный синтаксис устарел).
 
 ## Окружение
 

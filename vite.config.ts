@@ -26,6 +26,7 @@ export default defineConfig({
             },
             prerender: {
                 handleUnseenRoutes: "ignore",
+                handleHttpError: "warn",
             },
         }),
         paraglideVitePlugin({

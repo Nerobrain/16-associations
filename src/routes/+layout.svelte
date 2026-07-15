@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Pathname } from "$app/types";
-    import { resolve } from "$app/paths";
+    import { asset, resolve } from "$app/paths";
     import { page } from "$app/state";
     import { locales, localizeHref } from "$lib/paraglide/runtime";
     import { settingsStore } from "$lib/stores/settings.svelte";
@@ -31,6 +31,10 @@
 
 <svelte:head>
     <meta name="color-scheme" content="light" />
+    <link rel="apple-touch-icon" sizes="180x180" href={asset("/apple-touch-icon.png")} />
+    <link rel="icon" type="image/png" sizes="32x32" href={asset("/favicon-32x32.png")} />
+    <link rel="icon" type="image/png" sizes="16x16" href={asset("/favicon-16x16.png")} />
+    <link rel="manifest" href={asset("/site.webmanifest")} />
 </svelte:head>
 
 <MainLayout>
@@ -39,6 +43,6 @@
 
 <div style="display:none">
     {#each locales as locale (locale)}
-        <a href={resolve(localizeHref(page.url.pathname, { locale }) as Pathname)}>{locale}</a>
+        <a href={resolve(localizeHref(page.route.id ?? "/", { locale }) as Pathname)}>{locale}</a>
     {/each}
 </div>
