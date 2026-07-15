@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ['main']  # или 'master'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: |
+          # Устанавливаем BASE_PATH для сборки
+          # Если репозиторий не является пользовательским сайтом, имя репозитория
+          # станет частью пути. Можно получить из GITHUB_REPOSITORY.
+          REPO_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)
+          if [ "$REPO_NAME" != "${{ github.repository_owner }}" ]; then
+            export BASE_PATH="/$REPO_NAME"
+          fi
+          pnpm build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: gh-pages  # ветка, куда будет деплой
+          force_orphan: true        # очищает ветку gh-pages при каждом деплое

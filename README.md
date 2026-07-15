@@ -1,3 +1,5 @@
+[Русский](README.ru.md)
+
 # 16 Associations Self-Analysis Test
 
 A serverless Single Page Application (SPA) for taking the 16 associations psychological self-analysis test. This application runs entirely in the browser with no server-side processing or data transmission.
@@ -17,6 +19,7 @@ The 16 associations test is a psychological self-assessment tool designed to hel
 ## Technical Details
 
 This is a single-page application built with modern web technologies:
+
 - HTML5 for structure
 - CSS3 for styling
 - JavaScript for interactivity
@@ -37,11 +40,6 @@ This application is completely serverless. No data is sent to any server, stored
 ## About the 16 Associations Test
 
 The 16 associations test is a psychological assessment method that uses word associations to gain insights into a person's unconscious thoughts and emotional patterns. Participants are asked to respond immediately to a list of 16 words with the first word that comes to mind, allowing for the exploration of associative thinking patterns.
-
-## Localization
-
-- [English](README.md) (this version)
-- [Русский](README.ru.md)
 
 ## License
 
