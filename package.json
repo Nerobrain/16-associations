@@ -11,7 +11,8 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "eslint .",
-        "deploy": "pnpm build && npx gh-pages -d build -t true"
+        "deploy": "pnpm build && npx gh-pages -d build -t true",
+        "postbuild": "cp build/index.html build/404.html"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
