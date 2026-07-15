@@ -24,6 +24,9 @@ export default defineConfig({
             paths: {
                 base: process.argv.includes("dev") ? "" : (normalizedBase as "" | `/${string}`),
             },
+            prerender: {
+                handleUnseenRoutes: "ignore",
+            },
         }),
         paraglideVitePlugin({
             project: "./project.inlang",

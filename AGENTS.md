@@ -27,6 +27,7 @@
 - **Тёмная тема**: class-based через `@variant dark (&:where(.dark, .dark *))` в `layout.css`. Переключение в настройках (system/light/dark), по умолчанию `system`. Класс `.dark` на `<html>` управляется из `+layout.svelte`.
 - **Хранение**: текущая сессия — `localStorage` (ключ `analysis`), история — IndexedDB (`16Associations` / `sessions`).
 - **Роутинг**: SPA (adapter-static, `fallback: "404.html"`), `trailingSlash: "always"`.
+- **Сборка**: `postbuild` копирует `build/index.html` → `build/404.html` для SPA fallback. `handleUnseenRoutes: 'ignore'` в `vite.config.ts` — динамические `[id]` маршруты не пререндерятся.
 
 ## Окружение
 
