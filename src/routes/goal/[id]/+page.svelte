@@ -3,6 +3,7 @@
   import Tree from "$lib/components/ui/Tree.svelte";
   import PictureAsPdfIcon from "@iconify-svelte/material-symbols-light/picture-as-pdf";
   import MarkdownIcon from "@iconify-svelte/material-symbols-light/markdown";
+  import DataObjectIcon from "@iconify-svelte/material-symbols-light/data-object";
 
   import { page } from "$app/state";
   import { goto } from "$app/navigation";
@@ -140,6 +141,17 @@
       >
         <MarkdownIcon class="w-5 h-5" />
         <span class="text-xs">{m.result_ai_analysis()}</span>
+      </button>
+      <button
+        title={m.result_export_json()}
+        onclick={() => {
+          const id = page.params.id;
+          if (id) goto(resolve("/json/[id]", { id }));
+        }}
+        class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors flex items-center gap-1"
+      >
+        <DataObjectIcon class="w-5 h-5" />
+        <span class="text-xs">{m.result_export_json()}</span>
       </button>
     </div>
   </div>

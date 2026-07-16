@@ -4,13 +4,13 @@
 
 ## Команды
 
-| Команда | Что делает |
-|---|---|
-| `npm run dev` | Vite dev server (file polling включён для WSL) |
-| `npm run build` | production build (adapter-static, SPA) |
-| `npm run preview` | preview собранного сайта |
-| `npm run check` | `svelte-kit sync && svelte-check` — **единственный typecheck** |
-| `npm run lint` | ESLint — единственный линтер |
+| Команда           | Что делает                                                     |
+| ----------------- | -------------------------------------------------------------- |
+| `npm run dev`     | Vite dev server (file polling включён для WSL)                 |
+| `npm run build`   | production build (adapter-static, SPA)                         |
+| `npm run preview` | preview собранного сайта                                       |
+| `npm run check`   | `svelte-kit sync && svelte-check` — **единственный typecheck** |
+| `npm run lint`    | ESLint — единственный линтер                                   |
 
 Тестов и форматтера (`prettier`) нет. Перед коммитом: `npm run lint && npm run check`.
 
@@ -26,7 +26,7 @@
 
 ## Проект
 
-- **i18n**: Paraglide, базовая локаль `ru`, вторая `en`. Сгенерированные файлы: `src/lib/paraglide/` (gitignored).
+- **i18n**: Paraglide, базовая локаль `ru`, вторая `en`. Сгенерированные файлы неизменять: `src/lib/paraglide/` (gitignored).
 - **CSS**: Tailwind v4 — `@import 'tailwindcss'` в `src/routes/layout.css`. `tailwind.config.js` нет.
 - **Тёмная тема**: class-based через `@variant dark (&:where(.dark, .dark *))` в `layout.css`. Переключение в настройках (system/light/dark), по умолчанию `system`. Класс `.dark` на `<html>` управляется из `+layout.svelte`.
 - **Хранение**: текущая сессия — `localStorage` (ключ `analysis`), история — IndexedDB (`16Associations` / `sessions`).

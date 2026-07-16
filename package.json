@@ -38,5 +38,8 @@
     "dependencies": {
         "@inlang/paraglide-js-svelte": "^1.0.3",
         "uuid": "^14.0.1"
+    },
+    "allowScripts": {
+        "sharp@0.34.5": true
     }
 }
