@@ -20,6 +20,10 @@
 - Состояние: `.svelte.ts` модули с `$state`, `$derived`, `$effect` (не Svelte stores).
 - `npm run prepare` = `svelte-kit sync` (генерация типов `.svelte-kit/`). Запускается автоматически при `npm install`.
 
+## Навигация
+
+- **Внутренние ссылки и `goto()`**: используй `resolve()` из `$app/paths` с паттерном маршрута и объектом параметров. Например: `goto(resolve("/pdf/[id]", { id }))` или `<a href={resolve("/goal/[id]", { id })}>`. Не используй `page.route.id` как аргумент `resolve()` — паттерн должен быть литералом.
+
 ## Проект
 
 - **i18n**: Paraglide, базовая локаль `ru`, вторая `en`. Сгенерированные файлы: `src/lib/paraglide/` (gitignored).
