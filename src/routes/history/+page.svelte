@@ -2,17 +2,15 @@
   import { onMount } from "svelte";
   import { m } from "$lib/paraglide/messages.js";
   import { settingsStore } from "$lib/stores/settings.svelte";
-  import { loadMore } from "$lib/stores/db.svelte";
+  import { loadMore, saveRecord } from "$lib/stores/db.svelte";
   import { getLocale } from "$lib/paraglide/runtime.js";
   import { goto } from "$app/navigation";
   import { resolve } from "$app/paths";
-
-  import AccountTreeIcon from "@iconify-svelte/material-symbols-light/account-tree";
-  import PictureAsPdfIcon from "@iconify-svelte/material-symbols-light/picture-as-pdf";
-  import MarkdownIcon from "@iconify-svelte/material-symbols-light/markdown";
-  import FileJsonIcon from "@iconify-svelte/material-symbols-light/file-json";
+  import DatabaseUploadOutlineIcon from "@iconify-svelte/material-symbols-light/database-upload-outline";
 
   let records: { id: string; theme: string }[] = $state([]);
+  let importJson = $state("");
+  let importError = $state<string | null>(null);
 
   onMount(async () => {
     records = await loadMore(null, 10);
@@ -43,53 +41,65 @@
         return date.toISOString();
     }
   }
+
+  function importValid(): boolean {
+    try {
+      const obj = JSON.parse(importJson);
+      return typeof obj.theme === "string" && Array.isArray(obj.words) && obj.words.length === 31;
+    } catch {
+      return false;
+    }
+  }
+
+  async function handleImport() {
+    try {
+      const obj = JSON.parse(importJson);
+      const id = await saveRecord(obj.theme, obj.words);
+      records = [{ id, theme: obj.theme }, ...records];
+      importJson = "";
+      importError = null;
+    } catch (e) {
+      importError = String(e);
+    }
+  }
 </script>
 
 <h1 class="text-2xl font-bold mb-6">{m.title_history()}</h1>
 
+<div class="flex items-center gap-2 mb-4">
+  <input
+    type="text"
+    bind:value={importJson}
+    placeholder="Вставьте JSON для импорта"
+    class="flex-1 px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 outline-none focus:border-indigo-400 dark:focus:border-indigo-500 transition-colors"
+  />
+  <button
+    onclick={handleImport}
+    disabled={!importValid()}
+    class="p-2 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+    title="Импортировать запись"
+  >
+    <DatabaseUploadOutlineIcon class="w-5 h-5" />
+  </button>
+</div>
+
+{#if importError}
+  <p class="text-red-500 text-sm mb-4">{importError}</p>
+{/if}
+
 {#if records.length === 0}
   <p class="text-gray-500">{m.history_empty()} <a href={resolve("/session")}>{m.history_empty_session()}</a>.</p>
 {:else}
-  <ul class="space-y-2">
-    {#each records as { id, theme } (id)}
-      <li
-        class="flex flex-col-reverse md:flex-row px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900"
-      >
-        <div class="flex flex-col-reverse md:flex-row justify-between w-full my-auto">
-          <span class="font-medium text-gray-800 dark:text-gray-200">{theme}</span>
-          <span class="text-xs align-text-bottom text-gray-500 dark:text-gray-400">{formatDate(dateFromUUID(id))}</span>
-        </div>
-        <div class="flex items-center gap-0">
-          <button
-            title={m.result_view()}
-            onclick={() => goto(resolve(`/goal/[id]`, { id: id }))}
-            class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
-          >
-            <AccountTreeIcon class="w-5 h-5" />
-          </button>
-          <button
-            title={m.result_export_pdf()}
-            onclick={() => goto(resolve("/pdf/[id]", { id }))}
-            class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
-          >
-            <PictureAsPdfIcon class="w-5 h-5" />
-          </button>
-          <button
-            title={m.result_export_md()}
-            onclick={() => goto(resolve("/markdown/[id]", { id }))}
-            class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
-          >
-            <MarkdownIcon class="w-5 h-5" />
-          </button>
-          <button
-            title={m.result_export_json()}
-            onclick={() => goto(resolve("/json/[id]", { id }))}
-            class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
-          >
-            <FileJsonIcon class="w-5 h-5" />
-          </button>
-        </div>
-      </li>
-    {/each}
-  </ul>
+  {#each records as { id, theme } (id)}
+    <div
+      class="flex flex-col-reverse md:flex-row justify-between px-4 py-3 mb-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 w-full my-auto cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+      onclick={() => goto(resolve("/goal/[id]", { id }))}
+      onkeydown={(e) => e.key === "Enter" && goto(resolve("/goal/[id]", { id }))}
+      role="link"
+      tabindex="0"
+    >
+      <span class="font-medium text-gray-800 dark:text-gray-200">{theme}</span>
+      <span class="text-xs align-text-bottom text-gray-500 dark:text-gray-400">{formatDate(dateFromUUID(id))}</span>
+    </div>
+  {/each}
 {/if}

@@ -35,7 +35,7 @@
     getRecord(id)
       .then((record) => {
         if (record) {
-          jsonText = JSON.stringify(record, null, 2);
+          jsonText = JSON.stringify({ theme: record.theme, words: record.words }, null, 2);
         } else {
           error = m.result_not_found();
         }
