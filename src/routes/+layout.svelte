@@ -30,9 +30,12 @@
 
 <svelte:head>
   <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="application-name" content="16 Associations" />
   <link rel="apple-touch-icon" sizes="180x180" href={asset("/apple-touch-icon.png")} />
   <link rel="icon" type="image/png" sizes="32x32" href={asset("/favicon-32x32.png")} />
   <link rel="icon" type="image/png" sizes="16x16" href={asset("/favicon-16x16.png")} />
+  <link rel="icon" type="image/svg+xml" href={asset("/logo.svg")} />
   <link rel="manifest" href={asset("/site.webmanifest")} />
 </svelte:head>
 
