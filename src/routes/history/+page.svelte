@@ -11,10 +11,39 @@
   let records: { id: string; theme: string }[] = $state([]);
   let importJson = $state("");
   let importError = $state<string | null>(null);
+  let loading = $state(true);
+  let loadingMore = $state(false);
+
+  let sentinel = $state<HTMLDivElement | null>(null);
+
+  $effect(() => {
+    const el = sentinel;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loadingMore) {
+          loadNext();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  });
 
   onMount(async () => {
     records = await loadMore(null, 10);
+    loading = false;
   });
+
+  async function loadNext() {
+    if (records.length === 0) return;
+    loadingMore = true;
+    const lastId = records[records.length - 1].id;
+    const next = await loadMore(lastId, 10);
+    records = [...records, ...next];
+    loadingMore = false;
+  }
 
   function dateFromUUID(id: string): Date {
     const hex = id.replace(/-/g, "");
@@ -87,7 +116,9 @@
   <p class="text-red-500 text-sm mb-4">{importError}</p>
 {/if}
 
-{#if records.length === 0}
+{#if loading}
+  <p class="text-gray-500 text-sm py-8 text-center">{m.result_loading()}</p>
+{:else if records.length === 0}
   <p class="text-gray-500">{m.history_empty()} <a href={resolve("/session")}>{m.history_empty_session()}</a>.</p>
 {:else}
   {#each records as { id, theme } (id)}
@@ -102,4 +133,10 @@
       <span class="text-xs align-text-bottom text-gray-500 dark:text-gray-400">{formatDate(dateFromUUID(id))}</span>
     </div>
   {/each}
+
+  <div bind:this={sentinel} class="h-4"></div>
+
+  {#if loadingMore}
+    <p class="text-center text-sm text-gray-400 py-4">Загрузка...</p>
+  {/if}
 {/if}
