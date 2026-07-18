@@ -36,7 +36,10 @@
         "vite": "^8.0.16"
     },
     "dependencies": {
+        "@fontsource/inter": "^5.2.8",
         "@inlang/paraglide-js-svelte": "^1.0.3",
+        "jspdf": "^4.2.1",
+        "jspdf-autotable": "^5.0.8",
         "uuid": "^14.0.1"
     },
     "allowScripts": {

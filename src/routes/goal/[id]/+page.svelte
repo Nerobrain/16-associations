@@ -7,10 +7,11 @@
 
   import { page } from "$app/state";
   import { goto } from "$app/navigation";
-  import { resolve } from "$app/paths";
+  import { resolve, asset } from "$app/paths";
   import { getRecord } from "$lib/stores/db.svelte";
   import StyledMessage from "$lib/components/ui/StyledMessage.svelte";
   import type { PageProps } from "./$types";
+  import { exportPdf } from "$lib/export/export-pdf";
 
   let { params }: PageProps = $props();
 
@@ -83,6 +84,10 @@
     panning = false;
   }
 
+  async function handleExportPdf() {
+    await exportPdf(theme, treeData, page.url.origin, asset("/fonts/Inter-Regular.ttf"));
+  }
+
   let showTree = $state(false);
 </script>
 
@@ -122,10 +127,7 @@
       </button>
       <button
         title={m.result_export_pdf()}
-        onclick={() => {
-          const id = page.params.id;
-          if (id) goto(resolve("/pdf/[id]", { id }));
-        }}
+        onclick={handleExportPdf}
         class="p-1.5 rounded-lg text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors flex items-center gap-1"
       >
         <PictureAsPdfIcon class="w-5 h-5" />

@@ -64,7 +64,7 @@
   </div>
   <div class="text-xs text-gray-400 px-2 pt-4 border-t border-gray-200 dark:border-gray-700">
     <div class="flex items-center justify-between">
-      <span>v1.0.1</span>
+      <span>v1.0.2</span>
       <div class="flex items-center gap-1">
         {#each localeBtns as btn (btn)}
           <button class="px-1" onclick={() => setLocale(btn.name)}>
