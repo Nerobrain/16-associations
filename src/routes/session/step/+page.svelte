@@ -83,15 +83,15 @@
   <Bubble title={theme} />
 </div>
 
-<div class="mb-4 h-14">
+<div class="mb-4 min-h-14">
   {#if step > 1 && step <= limit}
     <Label><strong>{m.step_label_previous()}</strong></Label>
     <Bubble title={step > 1 ? `${analysisStore.answers[step - 2]}` : ""} />
   {:else if step > limit}
     <Label><strong>{m.step_combine_bold()}</strong>{m.step_combine_rest()}</Label>
-    <div class="flex inset-s-full gap-1">
+    <div class="flex flex-wrap gap-1">
       <Bubble title={analysisStore.answers[offset - rowLimit * 2 + substep * 2 - 2]} />
-      <p class="my-auto">{m.step_and()}</p>
+      <p class="text-center my-auto">{m.step_and()}</p>
       <Bubble title={analysisStore.answers[offset - rowLimit * 2 + substep * 2 - 1]} />
     </div>
   {/if}
