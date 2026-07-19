@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /$
+Disallow: /
+
+User-agent: GPTBot
+Allow: /$
+Disallow: /
+
+User-agent: Claude-Web
+Allow: /$
+Disallow: /
+
+User-agent: Google-Extended
+Allow: /$
+Disallow: /
+
+# Sitemap: https://example.com/sitemap.xml

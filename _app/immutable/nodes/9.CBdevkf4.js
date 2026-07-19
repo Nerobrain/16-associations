@@ -1,0 +1,1 @@
+import{Q as e,Z as t,r as n}from"../chunks/DOdX92GX.js";import{l as r,t as i}from"../chunks/BpWfOJrN.js";import"../chunks/xihTtKlq.js";import"../chunks/BttTpvJl.js";import{t as a}from"../chunks/b3xE50fq.js";function o(o,s){e(s,!0),n(()=>{a.theme?i(r(`/session/step`)):i(r(`/session/new`))}),t()}export{o as component};

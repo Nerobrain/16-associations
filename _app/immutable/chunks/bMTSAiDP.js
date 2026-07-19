@@ -1,0 +1,1 @@
+import{n as e}from"./vduVnCJv.js";var t=()=>`Загрузка...`,n=()=>`Loading...`,r=((r={},i={})=>(i.locale??e())===`ru`?t(r):n(r));export{r as t};

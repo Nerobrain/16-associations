@@ -1,0 +1,1 @@
+import{Q as e,Z as t,z as n}from"../chunks/DOdX92GX.js";import{l as r,t as i}from"../chunks/BpWfOJrN.js";import"../chunks/xihTtKlq.js";import"../chunks/BttTpvJl.js";function a(a,o){e(o,!0),n(()=>{i(r(`/`),{replaceState:!0})}),t()}export{a as component};

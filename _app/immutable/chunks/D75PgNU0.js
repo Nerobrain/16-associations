@@ -1,0 +1,1 @@
+import{W as e}from"./DOdX92GX.js";var t=`settings`,n={dateFormat:`full`,theme:`system`},r=JSON.parse(localStorage.getItem(t)||`null`),i=e({...n,...r});function a(){localStorage.setItem(t,JSON.stringify(i))}var o={get dateFormat(){return i.dateFormat},setDateFormat(e){i.dateFormat=e,a()},get theme(){return i.theme},setTheme(e){i.theme=e,a()}};export{o as t};

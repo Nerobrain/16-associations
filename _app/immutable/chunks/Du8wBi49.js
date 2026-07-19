@@ -1,0 +1,1 @@
+import{n as e}from"./vduVnCJv.js";var t=()=>`Запись не найдена`,n=()=>`Record not found`,r=((r={},i={})=>(i.locale??e())===`ru`?t(r):n(r));export{r as t};

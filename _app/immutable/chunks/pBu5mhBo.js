@@ -1,0 +1,1 @@
+import{n as e}from"./vduVnCJv.js";var t=()=>`16 Ассоциаций`,n=()=>`16 Associations`,r=((r={},i={})=>(i.locale??e())===`ru`?t(r):n(r));export{r as t};
