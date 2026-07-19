@@ -8,6 +8,11 @@
 
   let { children } = $props();
 
+  // Отменить fallback-редирект в 404.html — SPA загрузился успешно
+  $effect(() => {
+    window.__cancel404Redirect?.();
+  });
+
   function applyTheme(theme: string) {
     const isDark =
       theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
